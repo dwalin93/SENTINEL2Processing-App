@@ -81,9 +81,11 @@ app.get('/downloadSentinel', function (req,res){
 
     downloadSentinelSync(promObj);
     //downloadSentinelAsync(promObj);
-   console.log('Finished download')
+   console.log('Finished download');
+    unZIP('./test/','./test');
+    console.log('UNZIP finished');
     res.status(200).send()
-       //unZIP('./test/','./test');
+
 
 });
 

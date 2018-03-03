@@ -4,13 +4,6 @@ echo --- Start placing IMG_DATA at the root from main folder ---
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-for f in $DIR/test/*.zip;
-do
-  dir=${f%.zip}
-
-  unzip -d "./$dir" "./$f"
-done
-
 for scene in $DIR/test/*
 do
 (
