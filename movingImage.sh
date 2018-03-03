@@ -9,7 +9,7 @@ for scene in $DIR/test/*.SAFE
 do
 (
 
-         cd GRANULE && cd * && mv IMG_DATA ../../
+        cd $scene && cd GRANULE && cd * && mv * ../../
 
 )
 done
