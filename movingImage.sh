@@ -4,12 +4,12 @@ echo --- Start placing IMG_DATA at the root from main folder ---
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo $DIR
-for scene in $DIR/test/*.SAFE
+
+for scene in $DIR/test/
 do
 (
 
-        cd $scene && cd GRANULE && cd * && mv * ../../
+        cd $scene && cd GRANULE && cd * && mv IMG_DATA ../../
 
 )
 done
