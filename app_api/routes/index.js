@@ -333,7 +333,10 @@ try {
             }
 
 
-            return res.status(200).send(stdout); // Show output in this case the success message
+            child.on('exit', function (exit) {
+                console.log("child exit:", exit);
+                res.send('Sucess');
+            }) // Show output in this case the success message
         });
     }
 } catch(err){
