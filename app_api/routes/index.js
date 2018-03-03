@@ -218,22 +218,41 @@ function makeRequest(url, i, callback) {
     var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
 
     console.log("executing:", directory + '\\downloadProducts.sh2 ' + url + ' ' + namesArray[i]);
-    child = exec(directory + '\\downloadProducts2.sh ',[url,namesArray[i]],{shell:true});
-    child.on("error", function (error) {
-        console.log("child error:", error);
+    if (process.platform === "win32") {
+        child = exec(directory + '\\downloadProducts2.sh ', [url, namesArray[i]], {shell: true});
+        child.on("error", function (error) {
+            console.log("child error:", error);
 
-    })
+        })
 
-    child.stdout.on('data', function (data) {
-        console.log(data.toString());
+        child.stdout.on('data', function (data) {
+            console.log(data.toString());
 
-    });
+        });
 
-    child.on('exit', function (exit) {
-        console.log("child exit:", exit);
-        callback(exit);
+        child.on('exit', function (exit) {
+            console.log("child exit:", exit);
+            callback(exit);
 
-    })
+        })
+    } else {
+        child = exec('bash downloadProducts2.sh ', [url, namesArray[i]], {shell: true});
+        child.on("error", function (error) {
+            console.log("child error:", error);
+
+        })
+
+        child.stdout.on('data', function (data) {
+            console.log(data.toString());
+
+        });
+
+        child.on('exit', function (exit) {
+            console.log("child exit:", exit);
+            callback(exit);
+
+        })
+    }
 }
 
 function downloadSentinel(promObj) {
