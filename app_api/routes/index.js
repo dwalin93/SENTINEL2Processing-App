@@ -307,7 +307,7 @@ app.post('/moveImage', function (req, res, next) {
 try {
 
     var sys = require('util'),
-        exec = require('child_process').spawnSync,
+        exec = require('child_process').execSync,
         child;
 
     var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -325,7 +325,7 @@ try {
             return res.status(200).send(stdout); // Show output in this case the success message
         });
     } else{
-        child = exec('bash ./movingImage.sh',{shell:true}, function (error, stdout, stderr) {
+        child = exec('bash ./movingImage.sh', function (error, stdout, stderr) {
 
             if (error) // There was an error executing our script
             {
