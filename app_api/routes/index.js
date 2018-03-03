@@ -9,7 +9,7 @@ var rp = require('request-promise');
 var unzip = require('unzip');
 var progress = require('request-progress');
 var async = require('async');
-var proccessing = require('./proccessing');
+
 
 
 var namesArray = [];
