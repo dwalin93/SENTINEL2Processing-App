@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta charset="UTF-8">
+        <meta name="Author" content="Philipp Glahe: 420399">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+              integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+              crossorigin=""/>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.css">
+        <link rel="stylesheet" href="./views/style.css">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="views/handleSlider.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+        <script src="https://unpkg.com/leaflet-easybutton@2.0.0/src/easy-button.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="//cdn.opencpu.org/opencpu-0.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    </head>
+<body id="body">
+<div class="container-fluid" style="padding:0;">
+
+    <!-- row for content -->
+    <div id="resizeable" class="col-md-6">
+        <div class="row">
+    <!-- column for content -->
+    <div id="map"></div>
+        </div>
+    </div>
+
+    <div id="mirror" class="col-md-6">
+        <div class="row">
+        <div id="slider" class="ba-slider">
+            <img id="left" src="http://i.imgur.com/BIHN8KQ.jpg">
+            <div class="resize">
+                <img id="right" src="http://i.imgur.com/nS6dvpq.jpg">
+            </div>
+            <span class="handle"></span>
+        </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <span class="close1">&times;</span>
+                <div id="mapImage1"></div>
+                <div id="caption"></div>
+            </div>
+            <div id="myModal2" class="modal">
+                <span class="close2">&times;</span>
+                <div id="mapImage2"></div>
+                <div id="caption2"></div>
+            </div>
+            <div class="col-md-6">
+                <p>Date for right image<input id="datepicker1" type="text"></p>
+        </div>
+
+        <div class="col-md-6">
+                <p>Date for left image<input id="datepicker2" type="text"></p>
+            </div>
+        </div>
+
+        <div id="sentinelAnalysis" style="background-color:white;">
+
+            </div>
+</div>
+</div>
+
+<script>
+        $("#datepicker1").datepicker({
+            dateFormat:"yy-mm-dd",
+            onSelect: function(dateText, inst) {
+                getTilesOnDate(dateText);
+            }
+        });
+        $("#datepicker2").datepicker({
+            dateFormat:"yy-mm-dd",
+            onSelect: function(dateText, inst) {
+                getTilesOnDate(dateText)
+            }
+        });
+        $('#datepicker2').datepicker('disable');
+
+        function enableDatepicker() {
+                $('#datepicker2').datepicker('enable');
+        }
+
+        $('#myModal').on('shown.bs.modal', function(){
+            setTimeout(function() {
+                map.invalidateSize();
+            }, 1);
+        });
+        $('#myModal2').on('shown.bs.modal', function() {
+            setTimeout(function () {
+                map.invalidateSize();
+            }, 1);
+        });
+
+
+
+
+
+</script>
+</body>
+<script src="https://cdn.knightlab.com/libs/juxtapose/latest/js/juxtapose.min.js"></script>
+<link rel="stylesheet" href="https://cdn.knightlab.com/libs/juxtapose/latest/css/juxtapose.css">
+<script src="js/maps.js"></script>
+<script src="js/draw.js"></script>
+<script src="js/Sentinel.js"></script>
+<script src="js/draggable.js"></script>
+<script src="js/clientFunctions.js"></script>
+<script src="js/slider.js"></script>
+</html>

@@ -1,0 +1,28 @@
+.handle {
+    position:absolute;
+    left:50%;
+    top:0;
+    bottom:0;
+    width:4px;
+    margin-left:-2px;
+
+    background: rgba(0,0,0,.5);
+    cursor: ew-resize;
+}
+
+.handle:after {
+    position: absolute;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+
+}
+
+.handle.draggable:after {
+    width: 48px;
+    height: 48px;
+    margin: -24px 0 0 -24px;
+    line-height:50px;
+    font-size:30px;
+}

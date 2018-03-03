@@ -1,0 +1,36 @@
+{
+  "name": "Sentinel2ImageProcessing",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.13.3",
+    "cookie-parser": "~1.3.5",
+    "debug": "~2.2.0",
+    "express": "~4.13.0",
+    "fs-extra": "^5.0.0",
+    "geocoder": "^0.2.2",
+    "highland": "^2.11.1",
+    "hogan-express": "^0.5.2",
+    "js-call-r": "0.0.4",
+    "leaflet-easybutton": "^2.2.2",
+    "leaflet-search": "^2.3.6",
+    "mongoose": "~4.0.6",
+    "morgan": "~1.6.1",
+    "node-env-file": "^0.1.7",
+    "oppressor": "0.0.1",
+    "optparse": "^1.0.5",
+    "r-script": "0.0.3",
+    "request": "^2.83.0",
+    "request-progress": "^3.0.0",
+    "request-promise": "^4.2.2",
+    "request-promise-native": "^1.0.5",
+    "serve-favicon": "~2.3.0",
+    "through": "^2.3.8",
+    "unzip": "^0.1.11",
+    "util-deprecate": "^1.0.2"
+  }
+}
