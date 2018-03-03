@@ -325,7 +325,7 @@ try {
             return res.status(200).send(stdout); // Show output in this case the success message
         });
     } else{
-        child = exec('bash ./movingImage.sh',{sehell:true}, function (error, stdout, stderr) {
+        child = exec('bash ./movingImage.sh',{shell:true}, function (error, stdout, stderr) {
 
             if (error) // There was an error executing our script
             {
