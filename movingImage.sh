@@ -15,4 +15,4 @@ do
 done
 
 echo --- End placing IMG_DATA at the root from main folder ---
-echo "MOVED IMAGES"
+echo "MOVED IMAGES "
