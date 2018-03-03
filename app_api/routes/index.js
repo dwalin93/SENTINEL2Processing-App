@@ -79,10 +79,10 @@ app.get('/downloadSentinel', function (req,res){
    //downloadSentinel(promObj);
   // res.end('FINISHED DOWNLOAD');
 
-    downloadSentinelSync(promObj);
-   req.setTimeout(0);
+    //downloadSentinelSync(promObj);
+    downloadSentinelAsync(promObj);
    console.log('Finished download')
-    //res.status(200).send()
+    res.status(200).send()
        //unZIP('./test/','./test');
 
 });
@@ -292,17 +292,29 @@ try {
     var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
     console.log(directory);
 
-    child = exec(directory + '\\movingImage.sh', function (error, stdout, stderr) {
+    if (process.platform === "win32") {
+        child = exec(directory + '\\movingImage.sh', function (error, stdout, stderr) {
 
-        if (error) // There was an error executing our script
-        {
-            return next(error);
-        }
+            if (error) // There was an error executing our script
+            {
+                return next(error);
+            }
 
 
-        return res.status(200).send(stdout); // Show output in this case the success message
-    });
+            return res.status(200).send(stdout); // Show output in this case the success message
+        });
+    } else{
+        child = exec('bash movingImage.sh', function (error, stdout, stderr) {
 
+            if (error) // There was an error executing our script
+            {
+                return next(error);
+            }
+
+
+            return res.status(200).send(stdout); // Show output in this case the success message
+        });
+    }
 } catch(err){
     console.log(err);
 }
@@ -320,18 +332,29 @@ return new Promise((resolve,reject) =>{
     var directory = __dirname.substring(0,__dirname.indexOf("\\app_api"));
     console.log(directory);
 
-    child = exec(directory + '\\GDAL_Translate.sh', function (error, stdout, stderr)
-    {
+        if (process.platform === "win32") {
+            child = exec(directory + '\\GDAL_Translate.sh', function (error, stdout, stderr) {
 
-        if (error) // There was an error executing our script
-        {
-            reject();
-            return next(error);
+                if (error) // There was an error executing our script
+                {
+                    reject();
+                    return next(error);
+                }
+
+
+            });
+        } else {
+            child = exec('bash GDAL_Translate.sh', function (error, stdout, stderr) {
+
+                if (error) // There was an error executing our script
+                {
+                    reject();
+                    return next(error);
+                }
+
+
+            });
         }
-
-
-
-    });
     resolve(res);
     res.send('MOVED IMAGES')
 } catch(err){
@@ -359,6 +382,8 @@ function unZIP(path,dest,promObj) {
         }
     })
 }
+
+//unZIP();
 
 function test() {
     var sys = require('util'),
