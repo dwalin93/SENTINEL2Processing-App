@@ -329,7 +329,7 @@ app.post('/moveImage', function (req, res, next) {
                         console.log("child exit:", exit);
                         resolve(res);
                         res.send('Moved images')
-                    }) 
+                    })
                 });
             } else {
                 child = exec('bash ./movingImage.sh', function (error, stdout, stderr) {
@@ -425,7 +425,7 @@ function unZIP(path,dest,promObj) {
     })
 }
 
-unZIP("./test/","./test");
+//unZIP("./test/","./test");
 
 function test() {
     var sys = require('util'),

@@ -37,7 +37,10 @@ app.use(cookieParser());
 
 // our routes will be contained in routes/index.js
 var routes = require('./app_api/routes/index');
+// Routes if OpenCPU has to do something
+var processing = require('./app_api/routes/processing');
 app.use('/', routes);
+app.use('/processing',processing);
 
 
 
