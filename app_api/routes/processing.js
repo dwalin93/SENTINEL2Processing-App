@@ -27,7 +27,7 @@ app.post('/processImages', function (req,res) {
     console.log(promObj.Shapefile);
             createResultFolder(promObj)
             //.then(unZIP('./app/data/','./app/data'))
-            .then(moveImage)
+            //.then(moveImage)
             .then(GDALTranslate)
             .then(processSentinel)
             .then((res) => {
@@ -244,7 +244,7 @@ function moveImage(promObj){
         try {
 
             var sys = require('util'),
-                exec = require('child_process').execSync,
+                exec = require('child_process').exec,
                 child;
 
             var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -263,23 +263,16 @@ function moveImage(promObj){
 
                     child.on('exit', function (exit) {
                         console.log("child exit:", exit);
-                        resolve(res);
+                        resolve(promObj);
                         res.send('Moved images')
                     })
                 });
             } else {
                 child = exec('bash ./movingImage.sh', function (error, stdout, stderr) {
 
-                    if (error) // There was an error executing our script
-                    {
-                        return next(error);
-                    }
-
-
                     child.on('exit', function (exit) {
                         console.log("child exit:", exit);
                         resolve(promObj);
-                        res.send('Moved images')
                     }) // Show output in this case the success message
                 });
             }
@@ -295,7 +288,7 @@ function GDALTranslate(promObj){
     return new Promise((resolve,reject) =>{
         try{
             var sys  = require('util'),
-                exec = require('child_process').execSync,
+                exec = require('child_process').exec,
                 child;
 
             var directory = __dirname.substring(0,__dirname.indexOf("\\app_api"));
@@ -303,17 +296,10 @@ function GDALTranslate(promObj){
 
             if (process.platform === "win32") {
                 child = exec(directory + '\\GDAL_Translate.sh', function (error, stdout, stderr) {
-
-                    if (error) // There was an error executing our script
-                    {
-                        reject();
-                        return next(error);
-                    }
-
                     child.on('exit', function (exit) {
                         console.log("child exit:", exit);
-                        resolve(res);
-                        res.send('Moved images')
+                        resolve(promObj);
+
                     })
 
                 });
