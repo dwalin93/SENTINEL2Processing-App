@@ -117,7 +117,7 @@ function createResultFolder(promObj) {
             fs.mkdirs('./data', function(err) {
                 if (err) return console.error(err);
             });
-            fs.mkdirsSync('./data');
+            fs.mkdirsSync('./app/data');
             resolve(promObj)
             console.log("Ordner ist erstellt")
         } catch (error) {
