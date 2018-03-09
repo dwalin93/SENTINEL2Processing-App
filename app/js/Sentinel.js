@@ -85,9 +85,9 @@ function downloadSentinelData(ID,Name){
         },
         success: function(data,status){
             console.log('Content retreived from Copernicus API');
-            ProcessImages();
-
-
+            if (localStorage.getItem('Shapefile') !=''){
+                ProcessImages();
+            }
         },
         error: function (errorMessage) {
         }
@@ -283,13 +283,23 @@ function createGeoJSON(coordinates,names){
 
 
 
-L.easyButton('fa-globe', function(){
+var downloadData = L.easyButton('fa-globe', function(){
         map.on('click', getSentinelData());
-
     },
     'get Sentinel Data'
 ).addTo(map);
 
 
+var checkShape = function () {
+    if (localStorage.getItem('ShapeFile') != null){
+        downloadData.enable();
+    } else {
+        downloadData.disable();
+        map.on('click', function () {
+            alert('Please upload a Shapefile first.');
+        })
 
+
+    }
+}
 
