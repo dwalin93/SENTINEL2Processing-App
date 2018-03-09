@@ -299,9 +299,10 @@ function getImagesNames(path){
 }
 
 function createResultFolder(promObj) {
+    console.log('creating result');
     return new Promise((resolve, reject) => {
         try {
-            fs.mkdirs('./data', function(err) {
+            fs.mkdirs('./app/data', function(err) {
                 if (err) return console.error(err);
             });
             fs.mkdirsSync('./app/data');
