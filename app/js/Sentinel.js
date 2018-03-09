@@ -291,7 +291,7 @@ var downloadData = L.easyButton('fa-globe', function(){
 
 
 var checkShape = function () {
-    if (localStorage.getItem('ShapeFile') != null){
+    if (localStorage.getItem('Shapefile') != null){
         downloadData.enable();
     } else {
         downloadData.disable();
