@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
         cb(null,file.originalname)
     }
 })
-var upload = multer({storage:storage});
+
 
 var app = express();
 

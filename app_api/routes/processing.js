@@ -26,7 +26,8 @@ app.post('/processImages', function (req,res) {
     console.log(promObj.Shapefile);
 
     console.log(promObj.names[0].toString().substring(8,10));
-            unZIP('./app/data/','./app/data',promObj)
+            createResultFolder(promObj)
+            .then(unZIP('./app/data/','./app/data'))
             .then(moveImage)
             .then(GDALTranslate)
             .then(processSentinel)
@@ -295,6 +296,21 @@ function getImagesNames(path){
     return fs.readdirSync(path).filter(function (file) {
         return fs.statSync(path+'/'+file).isDirectory();
     });
+}
+
+function createResultFolder(promObj) {
+    return new Promise((resolve, reject) => {
+        try {
+            fs.mkdirs('./data', function(err) {
+                if (err) return console.error(err);
+            });
+            fs.mkdirsSync('./data');
+            resolve(promObj)
+            console.log("Ordner ist erstellt")
+        } catch (error) {
+            reject(error)
+        }
+    })
 }
 
 module.exports = app;
