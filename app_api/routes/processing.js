@@ -26,7 +26,7 @@ app.post('/processImages', function (req,res) {
 
     console.log(promObj.Shapefile);
             createResultFolder(promObj)
-            .then(unZIP('./app/data/','./app/data'))
+            //.then(unZIP('./app/data/','./app/data'))
             .then(moveImage)
             .then(GDALTranslate)
             .then(processSentinel)
