@@ -24,6 +24,7 @@ Dropzone.options.uploadWidget = {
             this.removeAllFiles(files);
             alert('Your Shapefile is uploaded sucessfully')
             document.getElementById('ShapeFile').innerHTML = 'Shapefile uploaded: ' + localStorage.getItem("Shapefile");
+            checkShape();
         })
 
 
