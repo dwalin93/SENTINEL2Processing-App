@@ -47,3 +47,7 @@ function initLeafletimage(map,image){
 modalImage('myModal','left','mapImage1','caption','close1');
 modalImage('myModal2','right','mapImage2','caption2','close2');
 
+var String = 'http://localhost:8080/data/S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE/IMG_DATA/T46QCJ_20180213T041901_FCC.png'
+
+regex = String.replace(/^[^_]*S2/g,"S2");
+console.log(regex.substring(0,regex.length-7));

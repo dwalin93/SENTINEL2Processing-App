@@ -75,8 +75,9 @@
                 <p id="dateAndTileRight"></p>
             </div>
         </div>
-
         <div id="sentinelAnalysis" style="background-color:white;">
+            <button onclick="compareNDVIImages()">Compare Images</button>
+            <br>
             <form id="upload-widget" method="post" action="/processing/uploadShapeFile" class="dropzone">
                 <div class="fallback">
                     <input name="file" type="file" />
@@ -85,7 +86,6 @@
             <br>
             <button id="uploadShapeFiles">Upload ShapeFile Components</button>
             <p id="ShapeFile"></p>
-            <button onclick="ProcessImages()">images</button>
             </div>
 </div>
 </div>

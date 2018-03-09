@@ -24,22 +24,47 @@ app.post('/processImages', function (req,res) {
     promObj['names'] = getImagesNames('./app/data/');
 
     console.log(promObj.Shapefile);
-
-    console.log(promObj.names[0].toString().substring(8,10));
             createResultFolder(promObj)
             .then(unZIP('./app/data/','./app/data'))
             .then(moveImage)
             .then(GDALTranslate)
             .then(processSentinel)
-            .then(calcNDVI)
             .then((res) => {
-        console.log("THEN:", res.status(200).end())
+        console.log("THEN:", res)
+                res.send();
     }).catch((err) => {
         console.log("CATCH:", err)
+                err.send();
     })
 
 
 })
+
+app.get('/compareNDVI', function (req,res) {
+    console.log(req.query);
+    var promObj = {};
+
+    promObj['leftImage'] = req.query.left;
+    promObj['rightImage'] = req.query.right;
+
+    compareNDVI(promObj)
+        .then((res) => {
+            console.log("THEN:", res)
+        }).catch((err) => {
+        console.log("CATCH:", err)
+    })
+})
+
+function processSentinel(promObj) {
+    return new Promise((resolve, reject) =>{
+        Promise.all([createFCC(promObj), calcNDVI(promObj)])
+            .then(() =>{
+                resolve(promObj);
+            }).catch((err) =>{
+            reject(err);
+        })
+    })
+}
 
 function calcNDVI(promObj){
     console.log('I am now in calcNDVI');
@@ -50,13 +75,13 @@ function calcNDVI(promObj){
                 var formData = {
                     NIR: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
                     Red: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
-                    shapeLink: fs.createReadStream('./shapefiles/' + promObj.Shapefile + '.shp')
+                    shapeLink:'"/home/p_glah01/SentinelApp/SENTINEL2Processing-App/'+'shapefiles/' + promObj.Shapefile + '.shp"'
                 }
             } else {
                 var formData = {
                     NIR: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
                     Red: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
-                    shapeLink: fs.createReadStream('./shapefiles/' + promObj.Shapefile + '.shp')
+                    shapeLink: '"/home/p_glah01/SentinelApp/SENTINEL2Processing-App/'+'shapefiles/' + promObj.Shapefile + '.shp"'
                 }
             }
 
@@ -68,7 +93,7 @@ function calcNDVI(promObj){
                 err = err || (response && (response.statusCode === 400 ||
                     response.statusCode === 502 ||
                     response.statusCode === 503) && response.statusCode);
-                console.log(err);
+                console.log(body);
                 if (!err) {
                     result = [];
                     var String = body.toString();
@@ -83,7 +108,7 @@ function calcNDVI(promObj){
                     }
                     request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
                     })
-                        .pipe(fs.createWriteStream('./app/data/' + name + path + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_FCC.png'))
+                        .pipe(fs.createWriteStream('./app/data/' + name + path + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_NDV.png'))
                             .on('finish', () => {
                                 console.log(name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_NDV.png' + "saved");
                                 callback();
@@ -105,7 +130,7 @@ function calcNDVI(promObj){
     })
 }
 
-function processSentinel(promObj){
+function createFCC(promObj){
     return new Promise((resolve,reject) => {
         function FalseColorComposite(name,callback) {
             var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/FCC';
@@ -163,6 +188,54 @@ function processSentinel(promObj){
         });
 
     })
+}
+
+
+function compareNDVI(promObj){
+    return new Promise((resolve,reject) => {
+        var left = parseImageSrc(promObj.leftImage);
+        var right = parseImageSrc(promObj.rightImage);
+        console.log(left);
+        var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/showDifferencesOnImage';
+        var formData = {
+            NDVI1: fs.createReadStream('./app/data/' + left + 'NDV.png'),
+            NDVI2: fs.createReadStream('./app/data/' + right + 'NDV.png'),
+        }
+
+        request.post({
+            url: url,
+            formData: formData
+        }, function optionalCallback(err, response, body) {
+            err = err || (response && (response.statusCode === 400 ||
+                response.statusCode === 502 ||
+                response.statusCode === 503) && response.statusCode);
+            if (!err) {
+                result = [];
+                var String = body.toString();
+                var sub = String.substring(10, 21);
+                console.log(sub);
+                promObj["tempLoc"] = sub;
+                console.log('I was here');
+                request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
+                })
+                    .pipe(fs.createWriteStream('./app/temp/'+ left.substring(0,60)+'_' + right.substring(0,60) +'_CNI.png'))
+                    .on('finish', () => {
+                        console.log(left + '_' + right + '_CNI.png' + "saved");
+                        resolve(promObj);
+                    });
+            } else {
+                reject(err);
+            }
+
+
+        })
+    });
+}
+
+function parseImageSrc(imageSrc){
+    var replacehost = imageSrc.toString().replace(/^[^_]*S2/g,"S2");
+    var replaceImageType = replacehost.substring(0,replacehost.length-7);
+    return replaceImageType;
 }
 
 function moveImage(promObj){
@@ -302,10 +375,10 @@ function createResultFolder(promObj) {
     console.log('creating result');
     return new Promise((resolve, reject) => {
         try {
-            fs.mkdirs('./app/data/', function(err) {
+            fs.mkdirs('./app/data', function(err) {
                 if (err) return console.error(err);
             });
-            fs.mkdirsSync('./app/data/');
+            fs.mkdirsSync('./app/data');
             console.log("Ordner ist erstellt");
             resolve(promObj)
         } catch (error) {

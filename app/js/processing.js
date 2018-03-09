@@ -11,7 +11,7 @@ function ProcessImages(){
            shapefile: localStorage.getItem('Shapefile')
         },
         success: function(data,response){
-            console.log(data);
+            alert('Images are ready.')
 
         },
         error: function (errorMessage) {
@@ -21,14 +21,13 @@ function ProcessImages(){
 
 function compareNDVIImages(){
     var url = encodeURI('/processing/compareNDVI');
-    $ajax({
+    $.ajax({
         type:'GET',
         url: url,
         data: {
             left: document.getElementById('left').src,
             right: document.getElementById('right').src
         },
-        dataType: 'image/png',
         success: function (data,response) {
             console.log(data);
         }

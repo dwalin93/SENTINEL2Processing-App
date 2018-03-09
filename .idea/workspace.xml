@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/clientFunctions.js" afterPath="$PROJECT_DIR$/app/js/clientFunctions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/processing.js" afterPath="$PROJECT_DIR$/app/js/processing.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_api/routes/processing.js" afterPath="$PROJECT_DIR$/app_api/routes/processing.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -24,21 +27,9 @@
       <file leaf-file-name="Sentinel.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="347">
               <caret line="85" column="26" lean-forward="false" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="maps.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/maps.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="10" column="44" lean-forward="false" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
-              <folding>
-                <marker date="1520586786911" expanded="true" signature="421:427" ph="©" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -46,8 +37,8 @@
       <file leaf-file-name="processing.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="307" column="38" lean-forward="false" selection-start-line="307" selection-start-column="38" selection-end-line="307" selection-end-column="38" />
+            <state relative-caret-position="-1165">
+              <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
               </folding>
@@ -55,21 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shapeFileUpload.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/shapeFileUpload.js">
+      <file leaf-file-name="clientFunctions.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/clientFunctions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="25" column="120" lean-forward="false" selection-start-line="25" selection-start-column="120" selection-end-line="25" selection-end-column="120" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/package.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+            <state relative-caret-position="708">
+              <caret line="52" column="47" lean-forward="false" selection-start-line="52" selection-start-column="47" selection-end-line="52" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -105,24 +86,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
+      <file leaf-file-name="processing.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/processing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+            <state relative-caret-position="532">
+              <caret line="29" column="10" lean-forward="false" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
+              <folding>
+                <element signature="n#!!doc;n#ProcessImages#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="465">
+              <caret line="79" column="16" lean-forward="false" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="processing.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/processing.js">
+      <file leaf-file-name="slider.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/slider.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+            <state relative-caret-position="436">
+              <caret line="111" column="38" lean-forward="false" selection-start-line="111" selection-start-column="38" selection-end-line="111" selection-end-column="38" />
               <folding>
-                <element signature="n#!!doc;n#ProcessImages#0" expanded="false" />
+                <element signature="e#0#42#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="draggable.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/draggable.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="111">
+              <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="10" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -169,9 +172,9 @@
       <find>inges</find>
       <find>unZip</find>
       <find>crea</find>
+      <find>fol</find>
       <find>getim</find>
       <find>createres</find>
-      <find>fol</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -181,7 +184,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/app/views/style.scss" />
-        <option value="$PROJECT_DIR$/app/js/draggable.js" />
         <option value="$PROJECT_DIR$/app/js/downloadSentinel.js" />
         <option value="$PROJECT_DIR$/app/views/slider.scss" />
         <option value="$PROJECT_DIR$/app/views/handleSlider.css" />
@@ -199,11 +201,7 @@
         <option value="$PROJECT_DIR$/app/lib/css/dropzone.scss" />
         <option value="$PROJECT_DIR$/app/lib/css/dropzone.css" />
         <option value="$PROJECT_DIR$/app/lib/css/basic.css" />
-        <option value="$PROJECT_DIR$/app/js/clientFunctions.js" />
         <option value="$PROJECT_DIR$/bin/www" />
-        <option value="$PROJECT_DIR$/app/index.html" />
-        <option value="$PROJECT_DIR$/app/js/processing.js" />
-        <option value="$PROJECT_DIR$/app/js/slider.js" />
         <option value="$PROJECT_DIR$/app/views/style.css" />
         <option value="$PROJECT_DIR$/downloadProducts2.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -213,6 +211,11 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/downloadProducts.sh" />
         <option value="$PROJECT_DIR$/app_api/routes/index.js" />
+        <option value="$PROJECT_DIR$/app/js/draggable.js" />
+        <option value="$PROJECT_DIR$/app/js/slider.js" />
+        <option value="$PROJECT_DIR$/app/js/clientFunctions.js" />
+        <option value="$PROJECT_DIR$/app/js/processing.js" />
+        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
       </list>
     </option>
@@ -571,7 +574,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="563740000" />
+    <option name="totallyTimeSpent" value="575405000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -833,22 +836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/clientFunctions.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="590">
-          <caret line="49" column="0" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="64" column="16" lean-forward="false" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/lib/js/dropzone.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -891,28 +878,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/draggable.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="17" column="28" lean-forward="false" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/draw.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="25">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/slider.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="754">
-          <caret line="133" column="48" lean-forward="false" selection-start-line="133" selection-start-column="48" selection-end-line="133" selection-end-column="48" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
@@ -937,16 +906,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/processing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
-          <folding>
-            <element signature="n#!!doc;n#ProcessImages#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
@@ -958,15 +917,7 @@
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
-          <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="85" column="26" lean-forward="false" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+          <caret line="22" column="23" lean-forward="false" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -995,10 +946,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/draggable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="10" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/slider.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="111" column="38" lean-forward="false" selection-start-line="111" selection-start-column="38" selection-end-line="111" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/clientFunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="708">
+          <caret line="52" column="47" lean-forward="false" selection-start-line="52" selection-start-column="47" selection-end-line="52" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="85" column="26" lean-forward="false" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="79" column="16" lean-forward="false" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/processing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="29" column="10" lean-forward="false" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc;n#ProcessImages#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="307" column="38" lean-forward="false" selection-start-line="307" selection-start-column="38" selection-end-line="307" selection-end-column="38" />
+        <state relative-caret-position="-1165">
+          <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
