@@ -8,6 +8,16 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var env = require('node-env-file');
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function (req,file,cb) {
+        cb(null,'./shapefiles/')
+    },
+    filename: function (req,file,cb) {
+        cb(null,file.originalname)
+    }
+})
+var upload = multer({storage:storage});
 
 var app = express();
 
@@ -32,7 +42,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use(multer({
+    storage:storage
+}).any());
 
 
 // our routes will be contained in routes/index.js

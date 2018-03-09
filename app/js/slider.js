@@ -23,7 +23,6 @@ $(document).ready(function(){
 });
 
 // Update sliders on resize.
-// We all do it: i.imgur.com/YkbaV.gif
 $(window).resize(function(){
     $('.ba-slider > img:first').on('load', function() {
         var width_first_image = $('.ba-slider > img:first').width() + 'px';
@@ -91,32 +90,37 @@ function drags(dragElement, resizeElement, container) {
 
 
 
-function getImage(name) {
-    var nameSubstring = name.substring(39,name.length - 5);
-    console.log(nameSubstring)
-    //var folder = "/data/" + name + '.SAFE' +'/IMG_DATA/' + nameSubstring + '_TCI.png'
-    var folder = '/data/S2B_MSIL1C_20180218T041819_N0206_R090_T46QDH_20180218T085403.SAFE/IMG_DATA/T46QDH_20180218T041819_TCI.png';
+function getImage(name,tile,datepicker) {
+    var nameSubstring = name.substring(38,45) + name.substring(11,26);
+    var nameTile = name.substring(38,44);
+    console.log(nameSubstring);
+    var folder = "/data/" + name + '.SAFE' +'/IMG_DATA/' + nameSubstring + '_FCC.png'
+
     console.log(name);
     var url = folder;
     $.ajax({
         url:  url,
         timeout:5000,
         success: function(data,status){
-            console.log($('#datepicker1').datepicker('getDate'));
-            if($('#datepicker1').datepicker('getDate') !=null) {
-                var date = parseDate($('#datepicker1').datepicker('getDate'));
-            } else {
-                alert('Please select a date for your first image');
+            var unparsed = $(datepicker).datepicker('getDate');
+            var date = parseDate(unparsed);
+
+            if (date == name.substring(45,name.length-7) && tile==nameTile) {
+                var target = $(datepicker);
+                if (target.is('#datepicker1')) {
+                    var left = document.getElementById('left');
+                    left.src = folder;
+                    document.getElementById('dateAndTileLeft').innerHTML = 'Current Left image: ' + nameTile + ' on ' + unparsed
+                    $('#datepicker1').datepicker('setDate', null);
+                } else {
+                    var right = document.getElementById('right');
+                    right.src = folder;
+                    console.log(right.src);
+                    document.getElementById('dateAndTileRight').innerHTML = 'Current Right image: ' + nameTile + ' on ' + unparsed
+                    $('#datepicker2').datepicker('setDate', null);
+
+                }
             }
-            if (date == name.substring(45,name.length-7)){
-                var left = document.getElementById('left');
-                left.src = folder;
-            } else{
-                var right = document.getElementById('right');
-                right.src = folder;
-            }
-           // console.log($('#datepicker1').datepicker('getDate').toString().substring(4,16));
-          //  if($('#datepicker1').datepicker('getDate'))
 
         },
         error: function (errorMessage) {
@@ -128,7 +132,6 @@ function getImage(name) {
 function parseDate(date) {
     var stringDate = date.toString();
     var subString = stringDate.substring(4, 16);
-    console.log(subString);
     if(/Jan/g.test(subString)) {
         var result = subString.replace(/Jan/g, '01');
     } else if(/Feb/g.test(subString)) {
@@ -155,10 +158,8 @@ function parseDate(date) {
         var result = subString.replace(/Dec/g, '12');
     }
     var noSpace = result.replace(/ /g,'');
-    console.log(noSpace);
-    //02182018
     var output = noSpace.substring(4,noSpace.length) + noSpace.substring(0,4);
-    console.log(output);
+    return output;
 
 }
 

@@ -47,4 +47,3 @@ function initLeafletimage(map,image){
 modalImage('myModal','left','mapImage1','caption','close1');
 modalImage('myModal2','right','mapImage2','caption2','close2');
 
-

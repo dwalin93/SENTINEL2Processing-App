@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="./views/style.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="views/handleSlider.css">
+        <link rel="stylesheet" href="lib/css/dropzone.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
@@ -28,6 +29,7 @@
         <script src="//cdn.opencpu.org/opencpu-0.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+        <script src="lib/js/dropzone.js"></script>
     </head>
 <body id="body">
 <div class="container-fluid" style="padding:0;">
@@ -43,9 +45,9 @@
     <div id="mirror" class="col-md-6">
         <div class="row">
         <div id="slider" class="ba-slider">
-            <img id="left" src="http://i.imgur.com/BIHN8KQ.jpg">
+            <img id="right">
             <div class="resize">
-                <img id="right" src="http://i.imgur.com/nS6dvpq.jpg">
+                <img id="left" alt="No images downloaded yet">
             </div>
             <span class="handle"></span>
         </div>
@@ -60,19 +62,30 @@
                 <div id="mapImage2"></div>
                 <div id="caption2"></div>
             </div>
+            <br>
             <div class="col-md-6">
-                <p>Date for right image<input id="datepicker1" type="text"></p>
+                <p>Date for left image<input id="datepicker1" type="text"></p>
+                <br>
+                <p id="dateAndTileLeft"></p>
         </div>
 
         <div class="col-md-6">
-                <p>Date for left image<input id="datepicker2" type="text"></p>
+                <p>Date for right image<input id="datepicker2" type="text"></p>
+                <br>
+                <p id="dateAndTileRight"></p>
             </div>
         </div>
 
         <div id="sentinelAnalysis" style="background-color:white;">
-
-            <button onclick="testOCPU()">MOVE</button>
-            <button onclick="GDAL_Translate()">TRANSLATE</button>
+            <form id="upload-widget" method="post" action="/processing/uploadShapeFile" class="dropzone">
+                <div class="fallback">
+                    <input name="file" type="file" />
+                </div>
+            </form>
+            <br>
+            <button id="uploadShapeFiles">Upload ShapeFile Components</button>
+            <p id="ShapeFile"></p>
+            <button onclick="ProcessImages()">images</button>
             </div>
 </div>
 </div>
@@ -122,4 +135,5 @@
 <script src="js/clientFunctions.js"></script>
 <script src="js/slider.js"></script>
 <script src="js/processing.js"></script>
+<script src="js/shapeFileUpload.js"></script>
 </html>

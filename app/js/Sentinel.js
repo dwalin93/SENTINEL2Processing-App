@@ -85,9 +85,8 @@ function downloadSentinelData(ID,Name){
         },
         success: function(data,status){
             console.log('Content retreived from Copernicus API');
+            ProcessImages();
 
-            MoveImages();
-           GDAL_Translate();
 
         },
         error: function (errorMessage) {
@@ -129,10 +128,17 @@ function getTilesOnDate(date){
 
 function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.name) {
-        layer.bindPopup('You clicked on ' + feature.properties.name,{maxWidth:800});
+        layer.bindTooltip(feature.properties.name.substring(38,44));
         layer.on('click', function () {
-            enableDatepicker();
-            getImage(feature.properties.name);
+            if($('#datepicker1').datepicker('getDate') !=null) {
+                enableDatepicker();
+                getImage(feature.properties.name, feature.properties.name.substring(38, 44),'#datepicker1');
+
+            }
+            if($('#datepicker2').datepicker('getDate') !=null) {
+                getImage(feature.properties.name, feature.properties.name.substring(38, 44),'#datepicker2');
+
+            }
 
 
         })
@@ -146,7 +152,8 @@ function addDataToMap(data, map) {
     }).addTo(map);
 
 feature.on('click', function () {
-    //feature.clearLayers();
+    feature.clearLayers();
+
 })
 
 }
@@ -273,6 +280,7 @@ function createGeoJSON(coordinates,names){
     geoJSON = JSON.parse(geoJSON);
     return geoJSON;
 }
+
 
 
 L.easyButton('fa-globe', function(){

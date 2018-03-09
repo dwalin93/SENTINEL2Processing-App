@@ -1,4 +1,5 @@
 /node_modules
 /test/*.zip
 /test/*.SAFE
+/app/data/
 

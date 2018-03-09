@@ -2,12 +2,14 @@
  * Created by pglah on 05.03.2018.
  */
 // OpenCPU Processing
-function testOCPU(){
-   var url = encodeURI('/processing/test')
-    console.log('testing route');
+function ProcessImages(){
+   var url = encodeURI('/processing/processImages');
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url:  url,
+        data: {
+           shapefile: localStorage.getItem('Shapefile')
+        },
         success: function(data,response){
             console.log(data);
 
@@ -15,5 +17,21 @@ function testOCPU(){
         error: function (errorMessage) {
         }
     });
+}
+
+function compareNDVIImages(){
+    var url = encodeURI('/processing/compareNDVI');
+    $ajax({
+        type:'GET',
+        url: url,
+        data: {
+            left: document.getElementById('left').src,
+            right: document.getElementById('right').src
+        },
+        dataType: 'image/png',
+        success: function (data,response) {
+            console.log(data);
+        }
+    })
 }
 

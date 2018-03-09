@@ -35,7 +35,7 @@ app.get('/getSentinel', function (req,res){
             'sendImmediately': false
     };
 
-    request(url_search + 'footprint:"Intersects(POLYGON(('+promObj.coordinates+')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-7DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json',{auth: auth},function(error, response, body) {
+    request(url_search + 'footprint:"Intersects(POLYGON(('+promObj.coordinates+')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-7DAYS TO NOW] ' + '&rows=2' + '&orderby=beginposition desc&format=json',{auth: auth},function(error, response, body) {
             console.log(body);
             res.send(body);
 
@@ -82,7 +82,6 @@ app.get('/downloadSentinel', function (req,res){
     downloadSentinelSync(promObj);
     //downloadSentinelAsync(promObj);
    console.log('Finished download');
-    unZIP('./test/','./test');
     console.log('UNZIP finished');
     res.status(200).send()
 
@@ -103,7 +102,7 @@ app.get('/getTilesOnDate', function (req,res) {
         'sendImmediately': false
     };
 
-    request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND ingestiondate:[' + promObj.date + 'T00:00:00.000Z TO ' + promObj.date + 'T23:59:59.999Z] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
+    request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND beginposition:[' + promObj.date + 'T00:00:00.000Z TO ' + promObj.date + 'T23:59:59.999Z] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
         console.log(body);
         res.send(body);
 
