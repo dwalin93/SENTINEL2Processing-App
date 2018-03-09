@@ -4,7 +4,7 @@
 echo --- Start Translate with 1C Data ---
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-for scene in $DIR/test/*.SAFE
+for scene in $DIR/app/data/*.SAFE
 do
 (
 cd $scene &&
