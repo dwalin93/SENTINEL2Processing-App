@@ -57,7 +57,8 @@ function getSentinelData(){
                 var ID = extractID(parsed);
                 var Name = extractName(parsed);
                 console.log(ID);
-                downloadSentinelData(ID, Name);
+                //downloadSentinelData(ID, Name);
+                ProcessImages();
                 //test();
             } else {
                 alert('No data found in that Region');

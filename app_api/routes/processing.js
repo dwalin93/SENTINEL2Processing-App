@@ -7,6 +7,7 @@ var request = require('request');
 var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
+var unzip = require('unzip');
 
 
 
