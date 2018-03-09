@@ -13,7 +13,7 @@ for id in ${!IDArray[@]}; do
    idIndex=("${IDArray[$id]}")
     echo "I am " "${IDArray[$id]}"
     echo "HERE IS THE" $name
-    curl -u dwalin93:Charly09 "https://scihub.copernicus.eu/dhus/odata/v1/Products('"$idIndex"')/\$value" --output $DIR/test/$name.zip
+    curl -u dwalin93:Charly09 "https://scihub.copernicus.eu/dhus/odata/v1/Products('"$idIndex"')/\$value" --output $DIR/app/data/$name.zip
     echo "download Product" $name
    done
 echo "FINISHED ALL"
