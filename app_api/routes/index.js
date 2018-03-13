@@ -27,6 +27,7 @@ app.get('/getSentinel', function (req,res){
     console.log('hallo');
    promObj['coordinates'] = req.query.data;
 
+
     var url_search="https://scihub.copernicus.eu/dhus/search?q=";
 
     auth = {
@@ -41,18 +42,12 @@ app.get('/getSentinel', function (req,res){
 
 
     });
-
-
-    //console.log(req);
-
-
 });
 
 app.get('/downloadSentinel', function (req,res){
     var promObj = {};
    // url_search = 'https://scihub.copernicus.eu/dhus/odata/v1/Products';
     console.log('halloDownload');
-    console.log('HIEEEEER DATEN ' + req.query.data[0]);
     var data = req.query.data;
     var Name = req.query.name;
     for(var i =0;i<Name.length;i++){
@@ -69,21 +64,15 @@ app.get('/downloadSentinel', function (req,res){
         promObj['requestURLS'] = requestarray;
     }
 
-
-   //requestarray = ['https://scihub.copernicus.eu/dhus/odata/v1/Products(\'0204ea67-6033-47e8-b20f-26852c63cd45\')/$value'];
-
-   //promObj['requestURLS'] = ['https://scihub.copernicus.eu/dhus/odata/v1/Products(\'0204ea67-6033-47e8-b20f-26852c63cd45\')/$value'];
-   console.log(promObj.requestURLS);
-
    createResultFolder(promObj)
-   //downloadSentinel(promObj);
-  // res.end('FINISHED DOWNLOAD');
+       .then(downloadSentinelSync)
+    .then(resp => {
+        console.log("THEN:", resp);
+        res.send('ready');
+    }).catch((err) => {
+        console.log("CATCH:", err)
 
-    downloadSentinelSync(promObj);
-    //downloadSentinelAsync(promObj);
-   console.log('Finished download');
-    console.log('UNZIP finished');
-    res.status(200).send()
+    })
 
 
 });
@@ -127,9 +116,9 @@ function createResultFolder(promObj) {
 }
 
 function downloadSentinelSync(promObj){
-        try {
+        return new Promise((resolve,reject) =>{
             var sys = require('util'),
-                exec = require('child_process').execSync,
+                exec = require('child_process').spawn,
                 child;
 
             var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -139,21 +128,21 @@ function downloadSentinelSync(promObj){
 
             if (process.platform === "win32") {
                 console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
-                child = exec(directory + '\\downloadProducts.sh ' + urls + ' ' + names);
-
+                child = exec(directory + '\\downloadProducts.sh ',[urls,names], {shell: true});
 
                 child.on("error", function (error) {
                     console.log("child error:", error);
+                    reject(promObj)
                 })
 
-                child.stdout.on('data', function (data) {
-                    process.stdout.write(data);
+                child.on('data', function (data) {
+                    console.log(data.toString());
 
                 });
 
-                child.on('disconnect', function (exit) {
+                child.on('exit', function (exit) {
                     console.log("child exit:", exit);
-
+                    resolve(promObj);
                 })
 
             } else {
@@ -163,28 +152,20 @@ function downloadSentinelSync(promObj){
 
                 child.on("error", function (error) {
                     console.log("child error:", error);
+                    reject(promObj)
                 })
 
-                child.stdout.on('data', function (data) {
-                    process.stdout.write(data);
+                child.on('data', function (data) {
+                    console.log(data.toString());
 
                 });
 
-                child.on('disconnect', function (exit) {
+                child.on('exit', function (exit) {
                     console.log("child exit:", exit);
-
+                    resolve(promObj);
                 })
-
-
-
             }
-        }
-        catch
-            (err)
-            {
-                return (err);
-            }
-
+        })
 }
 
 function parseArrayForBash(array){
@@ -298,159 +279,10 @@ function downloadSentinel(promObj) {
     });
 }
 
+/**module.exports = {
+    app,
+    downloadSentinelSync
+};
 
-
-
-
-app.post('/moveImage', function (req, res, next) {
-    return new Promise((resolve, reject) => {
-        try {
-
-            var sys = require('util'),
-                exec = require('child_process').execSync,
-                child;
-
-            var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
-            console.log(directory);
-
-            if (process.platform === "win32") {
-                child = exec(directory + '\\movingImage.sh', function (error, stdout, stderr) {
-
-                    if (error) // There was an error executing our script
-                    {
-                        reject(error);
-                        return next(error);
-
-                    }
-
-
-                    child.on('exit', function (exit) {
-                        console.log("child exit:", exit);
-                        resolve(res);
-                        res.send('Moved images')
-                    })
-                });
-            } else {
-                child = exec('bash ./movingImage.sh', function (error, stdout, stderr) {
-
-                    if (error) // There was an error executing our script
-                    {
-                        return next(error);
-                    }
-
-
-                    child.on('exit', function (exit) {
-                        console.log("child exit:", exit);
-                        resolve(res);
-                        res.send('Moved images')
-                    }) // Show output in this case the success message
-                });
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    });
-});
-
-
-app.post('/GDAL_Translate', function (req, res, next) {
-
-return new Promise((resolve,reject) =>{
-    try{
-    var sys  = require('util'),
-        exec = require('child_process').execSync,
-        child;
-
-    var directory = __dirname.substring(0,__dirname.indexOf("\\app_api"));
-    console.log(directory);
-
-        if (process.platform === "win32") {
-            child = exec(directory + '\\GDAL_Translate.sh', function (error, stdout, stderr) {
-
-                if (error) // There was an error executing our script
-                {
-                    reject();
-                    return next(error);
-                }
-
-                child.on('exit', function (exit) {
-                    console.log("child exit:", exit);
-                    resolve(res);
-                    res.send('Moved images')
-                })
-
-            });
-        } else {
-            child = exec('bash GDAL_Translate.sh', function (error, stdout, stderr) {
-
-                if (error) // There was an error executing our script
-                {
-                    reject();
-                    return next(error);
-                }
-
-                child.on('exit', function (exit) {
-                    console.log("child exit:", exit);
-                    resolve(res);
-                    res.send('Moved images')
-                })
-
-            });
-        }
-
-} catch(err){
-    reject(res)}
-})
-})
-
-
-
-function unZIP(path,dest,promObj) {
-    return new Promise((resolve, reject) => {
-        try {
-            var files = fs.readdirSync(path);
-            console.log(files)
-            for (i = 0; i < files.length; i++) {
-                console.log(files[i].split('.').pop())
-                if (files[i].split('.').pop() == 'zip') {
-                    fs.createReadStream(path + files[i]).pipe(unzip.Extract({path: dest}));
-                    resolve(promObj);
-                }
-
-            }
-        } catch (error){
-            reject(error)
-        }
-    })
-}
-
-//unZIP("./test/","./test");
-
-function test() {
-    var sys = require('util'),
-        exec = require('child_process').spawn,
-        child;
-
-    var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
-
-
-    console.log("executing:", directory + '\\downloadProducts2.sh ' + 'S2A_MSIL1C_20180220T040811_N0206_R047_T46QGH_20180220T074755' + ' ' + '66214563-164f-4b5c-9329-f47d9afdf58b');
-    child = exec(directory + '\\downloadProducts2.sh ',['66214563-164f-4b5c-9329-f47d9afdf58b','S2A_MSIL1C_20180220T040811_N0206_R047_T46QGH_20180220T074755'],{shell:true});
-    child.on("error", function (error) {
-        console.log("child error:", error);
-
-    })
-
-    child.stdout.on('data', function (data) {
-        console.log(data.toString());
-
-    });
-
-    child.on('beforeExit', function (exit) {
-        console.log("child exit:", exit);
-        callback(exit);
-
-    })
-}
-
+ **/
 module.exports = app;

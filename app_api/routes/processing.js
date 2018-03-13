@@ -8,6 +8,7 @@ var async = require('async');
 var fs = require('fs-extra');
 var path = require('path');
 var unzip = require('unzip');
+var index = require('./index');
 
 
 
@@ -26,19 +27,36 @@ app.post('/processImages', function (req,res) {
 
     console.log(promObj.Shapefile);
             createResultFolder(promObj)
-            //.then(unZIP('./app/data/','./app/data'))
-            //.then(moveImage)
+            .then(unZIP('./app/data/','./app/data'))
+            .then(moveImage)
             .then(GDALTranslate)
             .then(processSentinel)
-            .then((res) => {
-        console.log("THEN:", res)
-                res.send();
+            .then(resp => {
+        console.log("THEN:", resp);
+                res.send(res);
     }).catch((err) => {
         console.log("CATCH:", err)
-                err.send();
+
     })
 
 
+})
+
+
+app.post('/lookForNewImages', function (req,res) {
+    var promObj = {};
+    console.log(req.body.coordinates);
+    promObj['coordinates'] = req.body.coordinates;
+    promObj['shapeFile'] = req.body.shapefile;
+
+    lookDailyUpdate(promObj)
+        .then((resp) => {
+            console.log("THEN:", res);
+            res.send(resp);
+        }).catch((err) => {
+        console.log("CATCH:", err)
+        err.send();
+    })
 })
 
 app.get('/compareNDVI', function (req,res) {
@@ -49,12 +67,41 @@ app.get('/compareNDVI', function (req,res) {
     promObj['rightImage'] = req.query.right;
 
     compareNDVI(promObj)
-        .then((res) => {
-            console.log("THEN:", res)
+        .then((resp) => {
+            console.log("THEN:", res);
+            res.send(resp);
         }).catch((err) => {
         console.log("CATCH:", err)
+        err.send();
     })
 })
+
+function lookDailyUpdate(promObj) {
+    return new Promise((resolve,reject) => {
+        var url_search = "https://scihub.copernicus.eu/dhus/search?q=";
+
+        auth = {
+            'user': 'dwalin93',
+            'pass': 'Charly09',
+            'sendImmediately': false
+        };
+
+        request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-2DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
+            console.log(body);
+            promObj['results'] = body;
+            resolve(promObj);
+        })
+            .on('finish',function () {
+                console.log('finished')
+                resolve(promObj);
+            })
+            .on('error',function() {
+                console.log('error')
+                reject(promObj);
+            })
+
+    })
+}
 
 function processSentinel(promObj) {
     return new Promise((resolve, reject) =>{
@@ -138,14 +185,14 @@ function createFCC(promObj){
             if (name.toString().substring(8, 10) == '1C') {
                 var formData = {
                     R: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
-                    G: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B03.png'),
-                    B: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B02.png')
+                    G: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
+                    B: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B03.png')
                 }
             } else {
                 var formData = {
                     R: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
-                    G: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B03.png'),
-                    B: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B02.png')
+                    G: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
+                    B: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B03.png')
                 }
             }
             request.post({
@@ -240,89 +287,115 @@ function parseImageSrc(imageSrc){
 }
 
 function moveImage(promObj){
+    console.log('I am Moving')
     return new Promise((resolve, reject) => {
-        try {
-
             var sys = require('util'),
-                exec = require('child_process').exec,
+                exec = require('child_process').spawn,
                 child;
 
             var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
             console.log(directory);
 
             if (process.platform === "win32") {
-                child = exec(directory + '\\movingImage.sh', function (error, stdout, stderr) {
+                console.log('I am Windows');
+                child = exec(directory + '\\movingImage.sh',{stdio:'inherit'});
 
-                    if (error) // There was an error executing our script
-                    {
-                        reject(error);
-                        return next(error);
+                console.log(child.pid);
 
-                    }
-
-
-                    child.on('exit', function (exit) {
-                        console.log("child exit:", exit);
-                        resolve(promObj);
-                        res.send('Moved images')
+                    child.on("error", function (error) {
+                        console.log("child error:", error);
+                        reject(promObj)
                     })
-                });
-            } else {
-                child = exec('bash ./movingImage.sh', function (error, stdout, stderr) {
 
-                    child.on('exit', function (exit) {
-                        console.log("child exit:", exit);
+                    child.on('data', function (data) {
+                        console.log('hohoho');
+                        console.log(data.toString());
+
+                    })
+
+                child.on('exit', function (code, signal) {
+                    console.log('child process exited with ' +
+                        `code ${code} and signal ${signal}`);
                         resolve(promObj);
-                    }) // Show output in this case the success message
+                    });
+
+
+
+
+} else {
+                child = exec('bash ./movingImage.sh',{shell:true});
+
+                child.on("error", function (error) {
+                    console.log("child error:", error);
+                    reject(promObj)
+                })
+
+                child.on('data', function (data) {
+                    console.log(data.toString());
+
+                });
+
+                child.on('exit', function (code, signal) {
+                    console.log('child process exited with ' +
+                        `code ${code} and signal ${signal}`);
+                    resolve(promObj);
                 });
             }
-        } catch (err) {
-            console.log(err);
-        }
     });
 }
 
 
 
-function GDALTranslate(promObj){
-    return new Promise((resolve,reject) =>{
-        try{
-            var sys  = require('util'),
-                exec = require('child_process').exec,
-                child;
+function GDALTranslate(promObj) {
+    console.log('ITS GDAL NOW');
+    return new Promise((resolve, reject) => {
+        var sys = require('util'),
+            exec = require('child_process').spawn,
+            child;
 
-            var directory = __dirname.substring(0,__dirname.indexOf("\\app_api"));
-            console.log(directory);
+        var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
+        console.log(directory);
 
-            if (process.platform === "win32") {
-                child = exec(directory + '\\GDAL_Translate.sh', function (error, stdout, stderr) {
-                    child.on('exit', function (exit) {
-                        console.log("child exit:", exit);
-                        resolve(promObj);
+        if (process.platform === "win32") {
+            child = exec(directory + '\\GDAL_Translate.sh',{shell:true,stdio:[0,1,2]});
+            console.log('I am Windows')
 
-                    })
+            child.on("error", function (error) {
+                console.log("child error:", error);
+                reject(promObj)
+            })
 
-                });
-            } else {
-                child = exec('bash GDAL_Translate.sh', function (error, stdout, stderr) {
+            child.on('data', function (data) {
+                console.log(data.toString());
 
-                    if (error) // There was an error executing our script
-                    {
-                        reject();
-                        return next(error);
-                    }
+            });
 
-                    child.on('exit', function (exit) {
-                        console.log("child exit:", exit);
-                        resolve(promObj);
-                        res.send('Moved images')
-                    })
+            child.on('exit', function (code, signal) {
+                console.log('child process exited with ' +
+                    `code ${code} and signal ${signal}`);
+                resolve(promObj);
+            });
 
-                });
-            }
 
-        } catch(err){
-            reject(res)}
+        } else {
+            child = exec('bash GDAL_Translate.sh', {shell: true});
+
+            child.on("error", function (error) {
+                console.log("child error:", error);
+                reject(promObj)
+            })
+
+            child.on('data', function (data) {
+                console.log(data.toString());
+
+            });
+
+            child.on('exit', function (code, signal) {
+                console.log('child process exited with ' +
+                    `code ${code} and signal ${signal}`);
+                resolve(promObj);
+            });
+        }
     })
 }
 
@@ -336,8 +409,11 @@ function unZIP(path,dest,promObj) {
             for (i = 0; i < files.length; i++) {
                 console.log(files[i].split('.').pop())
                 if (files[i].split('.').pop() == 'zip') {
-                    fs.createReadStream(path + files[i]).pipe(unzip.Extract({path: dest}));
-                    resolve(promObj);
+                    fs.createReadStream(path + files[i]).pipe(unzip.Extract({path: dest}))
+                        .on('close', function () {
+                            resolve(promObj);
+                        })
+
                 }
                 else{
                     resolve(promObj);
@@ -372,6 +448,18 @@ function createResultFolder(promObj) {
             reject(error)
         }
     })
+
+    function checkExists(image){
+
+    }
 }
 
+/**module.exports = {
+    app,
+    GDALTranslate,
+    moveImage,
+    unZIP,
+    processSentinel
+};
+**/
 module.exports = app;

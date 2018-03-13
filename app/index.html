@@ -45,8 +45,10 @@
     <div id="mirror" class="col-md-6">
         <div class="row">
         <div id="slider" class="ba-slider">
+            <img class="slider" id="overlayRight">
             <img id="right">
             <div class="resize">
+                <img class="resize" id="overlayLeft">
                 <img id="left" alt="No images downloaded yet">
             </div>
             <span class="handle"></span>
@@ -64,19 +66,21 @@
             </div>
             <br>
             <div class="col-md-6">
-                <p>Date for left image<input id="datepicker1" type="text"></p>
+                <p>Date for left image: <input id="datepicker1" type="text"></p>
                 <br>
                 <p id="dateAndTileLeft"></p>
         </div>
-
         <div class="col-md-6">
-                <p>Date for right image<input id="datepicker2" type="text"></p>
+                <p>Date for right image: <input id="datepicker2" type="text"></p>
                 <br>
                 <p id="dateAndTileRight"></p>
             </div>
+            <div class="col-md-2">
+            <button class="btn btn-success" onclick="compareNDVIImages()">Compare Images</button>
+                Show differences: <input type="checkbox" id="differences" onclick="showDifferences()">
+            </div>
         </div>
         <div id="sentinelAnalysis" style="background-color:white;">
-            <button onclick="compareNDVIImages()">Compare Images</button>
             <br>
             <form id="upload-widget" method="post" action="/processing/uploadShapeFile" class="dropzone">
                 <div class="fallback">
@@ -132,8 +136,9 @@
 <script src="js/draw.js"></script>
 <script src="js/Sentinel.js"></script>
 <script src="js/draggable.js"></script>
-<script src="js/clientFunctions.js"></script>
+<script src="js/modal.js"></script>
 <script src="js/slider.js"></script>
 <script src="js/processing.js"></script>
 <script src="js/shapeFileUpload.js"></script>
+<script src="js/monitoring.js"></script>
 </html>

@@ -9,16 +9,18 @@ do
 (
 cd $scene &&
 if [ -e MTD_MSIL1C.xml ]; then
-	echo scene 2c 
+	echo scene 2c
 	cd IMG_DATA
 
 	for image in *.jp2
 	do
+	if [ ! -f "${image%.png}" ]; then
 	(
 		filename=$image
 		filenameWithoutType=${filename%.*}
 		gdal_translate -of PNG -co TILED=YES $image $filenameWithoutType.png
 	)
+	fi
 	done
 fi
 ) & done

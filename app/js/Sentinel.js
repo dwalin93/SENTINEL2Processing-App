@@ -1,39 +1,6 @@
 /**
  * Created by pglah on 23.10.2017.
  */
-function GDAL_Translate(){
-    var url = encodeURI('/GDAL_Translate');
-    console.log('hier1');
-    $.ajax({
-        type: 'POST',
-        url:  url,
-        timeout:5000,
-        success: function(data,status){
-            console.log('GDAL Translated jp2 to png')
-
-        },
-        error: function (errorMessage) {
-        }
-    });
-}
-
-
-function MoveImages(){
-    var url = encodeURI('/moveImage');
-    console.log('hier1');
-    $.ajax({
-        type: 'POST',
-        url:  url,
-        timeout:5000,
-        success: function(data,response){
-            console.log(data);
-
-        },
-        error: function (errorMessage) {
-        }
-    });
-}
-
 function getSentinelData(){
     var url = encodeURI('/getSentinel?');
     console.log('hier1');
@@ -57,8 +24,8 @@ function getSentinelData(){
                 var ID = extractID(parsed);
                 var Name = extractName(parsed);
                 console.log(ID);
-                //downloadSentinelData(ID, Name);
-                ProcessImages();
+                downloadSentinelData(ID, Name);
+               // ProcessImages();
                 //test();
             } else {
                 alert('No data found in that Region');
@@ -79,13 +46,12 @@ function downloadSentinelData(ID,Name){
         type: 'GET',
         url:  url,
         timeout:5000,
-        async: false,
         data: {
             data: ID,
             name: Name
         },
         success: function(data,status){
-            console.log('Content retreived from Copernicus API');
+            alert('Products downloaded. Processing now.')
             if (localStorage.getItem('Shapefile') !=''){
                 ProcessImages();
             }
@@ -131,6 +97,8 @@ function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.name) {
         layer.bindTooltip(feature.properties.name.substring(38,44));
         layer.on('click', function () {
+            console.log(feature.geometry.coordinates)
+            localStorage.setItem('mapcoords',feature.geometry.coordinates);
             if($('#datepicker1').datepicker('getDate') !=null) {
                 enableDatepicker();
                 getImage(feature.properties.name, feature.properties.name.substring(38, 44),'#datepicker1');
@@ -249,18 +217,6 @@ function getCoordsForMap(data){
         return arrayForCoords;
 
 
-}
-
-function swapCoordinates(array){
-    array.forEach(function(arr) {
-        arr.forEach(function(e, i) {
-            const a = e[0]
-            e[0] = e[1]
-            e[1] = a;
-        })
-    })
-
-    return array;
 }
 
 function createGeoJSON(coordinates,names){

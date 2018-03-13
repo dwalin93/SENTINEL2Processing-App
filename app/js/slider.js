@@ -129,6 +129,8 @@ function getImage(name,tile,datepicker) {
     });
 }
 
+
+
 function parseDate(date) {
     var stringDate = date.toString();
     var subString = stringDate.substring(4, 16);

@@ -1,5 +1,5 @@
 /**
- * Created by pglah on 23.10.2017.
+ * Created by pglah
  */
 // Initialise the FeatureGroup to store editable layers
 var convertedCoordArray = [];
@@ -68,6 +68,7 @@ map.on('draw:deleted', function (e){
 
     map.on('draw:created', function (e) {
         var layer = e.layer;
+        console.log(layer);
         localStorage.setItem('coordinates',layer);
         var latlon = layer.toGeoJSON();
         var coordArray = [];
