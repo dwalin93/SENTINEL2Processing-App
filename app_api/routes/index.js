@@ -118,7 +118,7 @@ function createResultFolder(promObj) {
 function downloadSentinelSync(promObj){
         return new Promise((resolve,reject) =>{
             var sys = require('util'),
-                exec = require('child_process').spawn,
+                exec = require('child_process').exec,
                 child;
 
             var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -147,7 +147,7 @@ function downloadSentinelSync(promObj){
 
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('bash downloadProducts.sh',[urls,names], {shell: true});
+                child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
 
 
                 child.on("error", function (error) {
