@@ -154,7 +154,7 @@ function downloadSentinelSync(promObj){
 
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('downloadProducts.sh',[urls,names],[{shell:true}]);
+                child = exec('bash ./downloadProducts.sh',[urls,names],[{shell:true}]);
 
 
                 child.on("error", function (error) {
