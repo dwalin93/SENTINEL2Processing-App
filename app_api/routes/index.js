@@ -146,7 +146,7 @@ function downloadSentinel(promObj){
 
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
+                child = exec('bash downloadProducts.sh '+ urls + ' ' + names [{stdio:'ignore'}]);
 
 
                 child.on("error", function (error) {
