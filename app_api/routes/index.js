@@ -64,10 +64,10 @@ app.get('/downloadSentinel', function (req,res){
     }
 
    createResultFolder(promObj)
-       .then(downloadSentinelSync)
+      // .then(downloadSentinel)
     .then(resp => {
         console.log("THEN:", resp);
-        res.send('ready');
+        res.send(resp);
     }).catch((err) => {
         console.log("CATCH:", err)
 
@@ -114,7 +114,7 @@ function createResultFolder(promObj) {
     })
 }
 
-function downloadSentinelSync(promObj){
+function downloadSentinel(promObj){
         return new Promise((resolve,reject) =>{
             var sys = require('util'),
                 exec = require('child_process').exec,
@@ -127,15 +127,7 @@ function downloadSentinelSync(promObj){
 
             if (process.platform === "win32") {
                 console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
-                child = exec(directory + '\\downloadProducts.sh ',[urls,names], {shell: true});
-
-                child.stdout.on('data', (data) => {
-                    console.log(`stdout: ${data}`);
-                });
-
-                child.stderr.on('data', (data) => {
-                    console.log(`stderr: ${data}`);
-                });
+                child = exec(directory + '\\downloadProducts.sh '+ urls + ' ' + names);
 
                 child.on("error", function (error) {
                     console.log("child error:", error);
@@ -242,48 +234,6 @@ function makeRequest(url, i, callback) {
 
         })
     }
-}
-
-function downloadSentinel(promObj) {
-
-    return new Promise((resolve, reject) => {
-        function makeRequest(url, i, callback) {
-            var sys = require('util'),
-                exec = require('child_process').spawn,
-                child;
-
-            var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
-
-            console.log("executing:", directory + '\\downloadProducts.sh ' + promObj.requestURLS[i] + ' ' + promObj.Name[i]);
-            var child = exec(directory + '\\downloadProducts.sh ',[url,promObj.Name[i]],{shell:true});
-
-            child.stdout.on('data', function (data) {
-                console.log("IM HERE");
-                console.log('data' + data);
-            });
-
-            child.stderr.on('data', function (data) {
-                console.log("IM HERE - Error");
-                console.log('test: ' + data);
-            });
-
-            child.on('disconnect', function (code) {
-                console.log("IM HERE");
-                console.log("close");
-                callback();
-            });
-
-            child.stdout.pipe(process.stdout)
-            child.stderr.pipe(process.stderr)
-        }
-
-        async.eachOfLimit(promObj.requestURLS, 2, makeRequest, function (err) {
-            if (err) reject(promObj)
-            else {
-                resolve(promObj);
-            }
-        });
-    });
 }
 
 module.exports = {
