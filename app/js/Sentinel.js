@@ -129,6 +129,7 @@ feature.on('click', function () {
 
 
 function extractID(JSONFile){
+    console.log(JSONFile)
     var result = [];
 
     for (i=0;i<JSONFile.feed.entry.length;i++){
@@ -136,6 +137,7 @@ function extractID(JSONFile){
         result.push(name);
     }
 
+    console.log(result);
     var dublicates = [];
     var array = result.filter(function(el) {
         // If it is not a duplicate, return true
