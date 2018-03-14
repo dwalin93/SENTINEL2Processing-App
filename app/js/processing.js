@@ -12,6 +12,7 @@ function ProcessImages(){
         },
         success: function(data,response){
             alert('Images are ready.')
+            console.log(data);
 
         },
         error: function (errorMessage) {

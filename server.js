@@ -40,7 +40,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'app')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(multer({
     storage:storage
@@ -51,7 +51,7 @@ app.use(multer({
 var routes = require('./app_api/routes/index');
 // Routes if OpenCPU has to do something
 var processing = require('./app_api/routes/processing');
-app.use('/', routes);
+app.use('/', routes.app);
 app.use('/processing',processing);
 
 

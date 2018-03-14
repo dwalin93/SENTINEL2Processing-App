@@ -13,7 +13,6 @@ var index = require('./index');
 
 
 
-
 app.post('/uploadShapeFile', function (req,res){
     console.log(req.files.originalname);
     res.send('uploaded Shapes');
@@ -43,11 +42,11 @@ app.post('/processImages', function (req,res) {
 })
 
 
-app.post('/lookForNewImages', function (req,res) {
+app.get('/lookForNewImages', function (req,res) {
     var promObj = {};
     console.log(req.body.coordinates);
-    promObj['coordinates'] = req.body.coordinates;
-    promObj['shapeFile'] = req.body.shapefile;
+    promObj['coordinates'] = req.query.coordinates;
+    promObj['shapeFile'] = req.query.shapefile;
 
     lookDailyUpdate(promObj)
         .then((resp) => {
@@ -76,6 +75,141 @@ app.get('/compareNDVI', function (req,res) {
     })
 })
 
+app.post('/automatedProcessing', function (req,res) {
+    var promObj = {};
+    console.log(req.body.id);
+    var ID = req.body.id;
+    var Name = req.body.name;
+    promObj['Name'] = Name;
+    promObj['ID'] = ID;
+    console.log(promObj.Name);
+    console.log(promObj.ID);
+
+
+
+
+    filterNewImages(promObj)
+        //.then(downloadSentinel)
+        //.then(unZIP('./app/data/','./app/data'))
+        //.then(moveImage)
+        //.then(GDALTranslate)
+        //.then(processSentinel)
+       // .then(compareWithLast)
+        //.then(writeMail)
+        .then(resp => {
+            console.log("THEN:", resp);
+            res.send('resp');
+        }).catch((err) => {
+        console.log("CATCH:", err)
+
+    })
+
+})
+
+function checkForItemInArray(array,name){
+            regex = new RegExp(name + '.SAFE','g');
+            console.log(regex);
+            console.log(name);
+            console.log(array);
+            if(array.some(e => regex.test(e))) {
+                return true;
+            } else {
+                return false;
+            }
+}
+
+function filterNewImages(promObj) {
+    return new Promise((resolve, reject) => {
+        var namesArray = [];
+        var idArray = [];
+        function filter(item, index, callback) {
+            var existImage = getImagesNames('./app/data');
+            var name = checkForItemInArray(existImage,promObj.Name[index]);
+            if (name == false) {
+                namesArray.push(promObj.Name[index]);
+                idArray.push(promObj.ID[index]);
+
+            }
+            promObj['newName'] = namesArray;
+            promObj['newID'] = idArray;
+            callback();
+        }
+
+        async.eachOfSeries(promObj.Name,filter, function (err) {
+            if (err) reject(promObj);
+            else {
+                resolve(promObj);
+            }
+        });
+    })
+}
+
+
+
+
+
+function downloadSentinel(promObj){
+    return new Promise((resolve,reject) =>{
+        var sys = require('util'),
+            exec = require('child_process').spawn,
+            child;
+
+        var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
+
+        var urls = index.parseArrayForBash(promObj.newID);
+        var names = index.parseArrayForBash(promObj.newName);
+
+        if (process.platform === "win32") {
+            console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
+            child = exec(directory + '\\downloadProducts.sh ',[urls,names], {shell: true});
+
+            child.stdout.on('data', (data) => {
+                console.log(`stdout: ${data}`);
+            });
+
+            child.stderr.on('data', (data) => {
+                console.log(`stderr: ${data}`);
+            });
+
+            child.on("error", function (error) {
+                console.log("child error:", error);
+                reject(promObj)
+            })
+
+            child.on('data', function (data) {
+                console.log(data.toString());
+
+            });
+
+            child.on('exit', function (exit) {
+                console.log("child exit:", exit);
+                resolve(promObj);
+            })
+
+        } else {
+            console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
+            child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
+
+
+            child.on("error", function (error) {
+                console.log("child error:", error);
+                reject(promObj)
+            })
+
+            child.on('data', function (data) {
+                console.log(data.toString());
+
+            });
+
+            child.on('exit', function (exit) {
+                console.log("child exit:", exit);
+                resolve(promObj);
+            })
+        }
+    })
+}
+
+
 function lookDailyUpdate(promObj) {
     return new Promise((resolve,reject) => {
         var url_search = "https://scihub.copernicus.eu/dhus/search?q=";
@@ -86,7 +220,7 @@ function lookDailyUpdate(promObj) {
             'sendImmediately': false
         };
 
-        request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-2DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
+        request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-5DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
             console.log(body);
             promObj['results'] = body;
             resolve(promObj);
@@ -280,6 +414,58 @@ function compareNDVI(promObj){
     });
 }
 
+function compareWithLast(promObj){
+    return new Promise((resolve,reject) => {
+        function NDVINowLast(name,callback) {
+            var left = parseImageSrc(promObj.leftImage);
+            var right = parseImageSrc(promObj.rightImage);
+            console.log(left);
+            var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/showDifferencesOnImage';
+            var formData = {
+                NDVI1: fs.createReadStream('./app/data/' + left + 'NDV.png'),
+                NDVI2: fs.createReadStream('./app/data/' + right + 'NDV.png'),
+            }
+
+            request.post({
+                url: url,
+                formData: formData
+            }, function optionalCallback(err, response, body) {
+                err = err || (response && (response.statusCode === 400 ||
+                    response.statusCode === 502 ||
+                    response.statusCode === 503) && response.statusCode);
+                if (!err) {
+                    result = [];
+                    var String = body.toString();
+                    var sub = String.substring(10, 21);
+                    console.log(sub);
+                    promObj["tempLoc"] = sub;
+                    console.log('I was here');
+                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
+                    })
+                        .pipe(fs.createWriteStream('./app/temp/' + left.substring(0, 60) + '_' + right.substring(0, 60) + '_CNI.png'))
+                        .on('finish', () => {
+                            console.log(left + '_' + right + '_CNI.png' + "saved");
+                            resolve(promObj);
+                        });
+                } else {
+                    reject(err);
+                }
+
+
+            })
+        }
+
+        async.eachSeries(promObj.NewName,NDVINowLast, function (err) {
+            if (err) reject(promObj);
+            else {
+                resolve(promObj);
+            }
+        });
+
+    });
+}
+
+
 function parseImageSrc(imageSrc){
     var replacehost = imageSrc.toString().replace(/^[^_]*S2/g,"S2");
     var replaceImageType = replacehost.substring(0,replacehost.length-7);
@@ -298,7 +484,7 @@ function moveImage(promObj){
 
             if (process.platform === "win32") {
                 console.log('I am Windows');
-                child = exec(directory + '\\movingImage.sh',{stdio:'inherit'});
+                child = exec(directory + '\\movingImage.sh',{stdio:'inherit',shell:true});
 
                 console.log(child.pid);
 

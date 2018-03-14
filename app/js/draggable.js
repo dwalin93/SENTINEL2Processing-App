@@ -30,3 +30,10 @@ function initUI() {
 document.addEventListener("DOMContentLoaded", function(event) {
     initUI();
 });
+
+regex = new RegExp('S2B_MSIL1C_20180310T041559_N0206_R090_T46QEK_20180310T075716.SAFE','g');
+
+array = ['S2B_MSIL1C_20180310T041559_N0206_R090_T46QEK_20180310T075716.SAFE'];
+
+console.log(array.some(e => regex.test(e)));
+

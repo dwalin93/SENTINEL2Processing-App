@@ -56,8 +56,7 @@ app.get('/downloadSentinel', function (req,res){
     promObj['Name'] = Name;
     console.log(namesArray);
 
-        // var result = getRequestedTiles(data);
-    //console.log(req);
+
     requestarray = [];
     for (i=0; i<data.length;i++) {
         requestarray.push(data[i]);
@@ -118,7 +117,7 @@ function createResultFolder(promObj) {
 function downloadSentinelSync(promObj){
         return new Promise((resolve,reject) =>{
             var sys = require('util'),
-                exec = require('child_process').exec,
+                exec = require('child_process').spawn,
                 child;
 
             var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -129,6 +128,14 @@ function downloadSentinelSync(promObj){
             if (process.platform === "win32") {
                 console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
                 child = exec(directory + '\\downloadProducts.sh ',[urls,names], {shell: true});
+
+                child.stdout.on('data', (data) => {
+                    console.log(`stdout: ${data}`);
+                });
+
+                child.stderr.on('data', (data) => {
+                    console.log(`stderr: ${data}`);
+                });
 
                 child.on("error", function (error) {
                     console.log("child error:", error);
@@ -147,7 +154,7 @@ function downloadSentinelSync(promObj){
 
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
+                child = exec('bash downloadProducts.sh ',[urls,names]);
 
 
                 child.on("error", function (error) {
@@ -279,10 +286,10 @@ function downloadSentinel(promObj) {
     });
 }
 
-/**module.exports = {
-    app,
-    downloadSentinelSync
+module.exports = {
+    app:app,
+    parseArrayForBash:parseArrayForBash
 };
 
- **/
-module.exports = app;
+
+//module.exports = app;
