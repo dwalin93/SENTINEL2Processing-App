@@ -1,13 +1,26 @@
 /**
  * Created by pglah on 06.02.2018.
  */
+var mapLeft = L.map('mapImage1',
+    {
+        maxZoom: 24,
+            minZoom: -24,
+        crs: L.CRS.Simple
+    });
+
+var mapRight = L.map('mapImage2',
+    {
+        maxZoom: 24,
+        minZoom: -24,
+        crs: L.CRS.Simple
+    });
 
 function modalImage(modal,image,modalDiv,text,close) {
 // Get the modal
 
+
     var modal = document.getElementById(modal);
     var img = document.getElementById(image);
-    var modalDiv = document.getElementById(modalDiv);
     console.log(modalDiv);
     var captionText = document.getElementById(text);
     img.onclick = function () {
@@ -27,23 +40,20 @@ function modalImage(modal,image,modalDiv,text,close) {
 
 function initLeafletimage(map,image){
     console.log(image.src)
-    var imgDimensions={width:300, height:300} //this is the height and width of the image. It hasn't been loaded yet.
-
-    var map = L.map(map, {
-        maxZoom: 24,
-        minZoom: -24,
-        crs: L.CRS.Simple
-    }).setView([imgDimensions.height/2, imgDimensions.width/2], 0);
-
+    var imgDimensions={width:600, height:600}
     var imageUrl = image.src;
     var imageBounds = [
         [imgDimensions.width , 0],
         [0, imgDimensions.height]
     ];
+    map.setView([imgDimensions.height/2, imgDimensions.width/2], 0);
 
     L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
 }
 
-modalImage('myModal','left','mapImage1','caption','close1');
-modalImage('myModal2','right','mapImage2','caption2','close2');
+
+modalImage('myModal','left',mapLeft,'caption','close1');
+modalImage('myModal2','right',mapRight,'caption2','close2');
+
 

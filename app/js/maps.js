@@ -1,7 +1,3 @@
-/**
- * Created by pglah on 23.10.2017.
- */
-
 var map = L.map('map');
 
 $(window).on("resize", function () { $("#map").height($(window).height()); map.invalidateSize(); }).trigger("resize");

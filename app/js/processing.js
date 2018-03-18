@@ -39,14 +39,17 @@ function compareNDVIImages(){
 }
 
 function showDifferences() {
-    var left = parseImageSrc(document.getElementById('left').src);
-    var right = parseImageSrc(document.getElementById('right').src);
+    try {
+        var left = parseImageSrc(document.getElementById('left').src);
+        var right = parseImageSrc(document.getElementById('right').src);
 
-    var differenceImage = '/temp/'+ left.substring(0,60)+'_' + right.substring(0,60) +'_CNI.png';
+        var differenceImage = '/temp/' + left.substring(0, 60) + '_' + right.substring(0, 60) + '_CNI.png';
 
-    document.getElementById('overlayLeft').src = differenceImage;
-    document.getElementById('overlayRight').src = differenceImage;
-
+        document.getElementById('left').src = differenceImage;
+        document.getElementById('right').src = differenceImage;
+    } catch (err){
+        alert('images not compared yet');
+    }
 }
 
 function parseImageSrc(imageSrc){

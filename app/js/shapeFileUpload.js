@@ -2,11 +2,12 @@
  * Created by pglah on 06.03.2018.
  */
 Dropzone.options.uploadWidget = {
-    parallelUploads: 10,
+    parallelUploads: 15,
     paramName: 'file',
     autoProcessQueue: false,
     dictDefaultMessage: 'Drag a shapefile here to upload, or click to select one. \n Please provide all shapefile components seperatly and not in a folder.',
-    acceptedFiles: '.cpg,.dbf,.prj,.sbn,.sbx,.shp,.shx',
+    acceptedFiles: '.cpg,.dbf,.prj,.sbn,.sbx,.shp,.shx,.atx,.fbn,.fbx,.ain,.aih,.ixs,.mxs,.xml,.cpg',
+    addRemoveLinks: true,
     init: function() {
         $('#uploadShapeFiles').click(function() {
             var myDropzone = Dropzone.forElement(".dropzone");

@@ -9,12 +9,13 @@ var fs = require('fs-extra');
 var path = require('path');
 var unzip = require('unzip');
 var index = require('./index');
+var nodemailer = require('nodemailer');
 
 
 
 
 app.post('/uploadShapeFile', function (req,res){
-    console.log(req.files.originalname);
+    console.log(req.files.filename);
     res.send('uploaded Shapes');
 });
 
@@ -80,11 +81,11 @@ app.post('/automatedProcessing', function (req,res) {
     console.log(req.body.id);
     var ID = req.body.id;
     var Name = req.body.name;
-    promObj['Name'] = Name;
+    promObj['names'] = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE'];
     promObj['ID'] = ID;
-    console.log(promObj.Name);
+    console.log('promObj.Name ' + promObj.names);
     console.log(promObj.ID);
-
+    promObj.newName = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE']
 
 
 
@@ -94,11 +95,12 @@ app.post('/automatedProcessing', function (req,res) {
         //.then(moveImage)
         //.then(GDALTranslate)
         //.then(processSentinel)
-       // .then(compareWithLast)
-        //.then(writeMail)
+        .then(compareWithLast)
+        .then(readMail)
+        .then(writeMail)
         .then(resp => {
             console.log("THEN:", resp);
-            res.send('resp');
+            res.send(resp);
         }).catch((err) => {
         console.log("CATCH:", err)
 
@@ -124,9 +126,9 @@ function filterNewImages(promObj) {
         var idArray = [];
         function filter(item, index, callback) {
             var existImage = getImagesNames('./app/data');
-            var name = checkForItemInArray(existImage,promObj.Name[index]);
+            var name = checkForItemInArray(existImage,promObj.names[index]);
             if (name == false) {
-                namesArray.push(promObj.Name[index]);
+                namesArray.push(promObj.names[index]);
                 idArray.push(promObj.ID[index]);
 
             }
@@ -135,7 +137,7 @@ function filterNewImages(promObj) {
             callback();
         }
 
-        async.eachOfSeries(promObj.Name,filter, function (err) {
+        async.eachOfSeries(promObj.names,filter, function (err) {
             if (err) reject(promObj);
             else {
                 resolve(promObj);
@@ -143,6 +145,7 @@ function filterNewImages(promObj) {
         });
     })
 }
+
 
 
 
@@ -249,6 +252,7 @@ function processSentinel(promObj) {
 }
 
 function calcNDVI(promObj){
+    console.log(promObj.shapefile)
     console.log('I am now in calcNDVI');
     return new Promise((resolve,reject) => {
         function NDVI(name,callback) {
@@ -414,48 +418,129 @@ function compareNDVI(promObj){
     });
 }
 
+function writeMail(promObj) {
+    return new Promise((resolve, reject) => {
+        nodemailer.createTestAccount((err, account) => {
+            console.log('Sending Mail');
+            if (err) {
+                console.error('Failed to create a testing account');
+                console.error(err);
+                reject(promObj);
+            }
+            let transporter = nodemailer.createTransport({
+                host: 'smtp.ethereal.email',
+                port: 587,
+                auth: {
+                    user: 'x6i7imxsjibx3ev6@ethereal.email',
+                    pass: 'j6utbr9u2b96gt958v'
+                }
+            },
+                {
+                    from: 'Sentinel App <no-reply@SentinelApp.net>',
+                }
+            );
+            // Message object
+            let message = {
+                // Comma separated list of recipients
+                to: promObj.mail,
+
+                // Subject of the message
+                subject: 'New Images arrived',
+                html: '<p><b>Hello,</b>' +
+                '<p>New images arrived for the following tiles:<br>' + promObj.newName + '<br>Please visit the Website to look at the images: <a href="http://gis-bigdata:6502">gis-bigdata:6502</a>'
+            }
+            transporter.sendMail(message, (err, info) => {
+                if (err) {
+                    console.log('Error occurred. ' + err.message);
+                    return process.exit(1);
+                }
+
+                console.log('Message sent: %s', info.messageId);
+                // Preview only available when sending through an Ethereal account
+                console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+            });
+
+            resolve(promObj);
+        });
+
+    })
+}
+
+function readMail(promObj) {
+    return new Promise((resolve,reject) =>{
+        var readStream = fs.createReadStream('./data' + '/mail.txt', 'utf8');
+        let data = ''
+        readStream.on('data', function (chunk) {
+            data += chunk;
+        }).on('end', function () {
+            console.log(data);
+            promObj['mail'] = data
+            resolve(promObj)
+        }).on('error',function (err) {
+            console.log(err)
+            reject(promObj);
+        })
+    })
+
+}
 function compareWithLast(promObj){
     return new Promise((resolve,reject) => {
         function NDVINowLast(name,callback) {
-            var left = parseImageSrc(promObj.leftImage);
-            var right = parseImageSrc(promObj.rightImage);
-            console.log(left);
-            var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/showDifferencesOnImage';
-            var formData = {
-                NDVI1: fs.createReadStream('./app/data/' + left + 'NDV.png'),
-                NDVI2: fs.createReadStream('./app/data/' + right + 'NDV.png'),
-            }
-
-            request.post({
-                url: url,
-                formData: formData
-            }, function optionalCallback(err, response, body) {
-                err = err || (response && (response.statusCode === 400 ||
-                    response.statusCode === 502 ||
-                    response.statusCode === 503) && response.statusCode);
-                if (!err) {
-                    result = [];
-                    var String = body.toString();
-                    var sub = String.substring(10, 21);
-                    console.log(sub);
-                    promObj["tempLoc"] = sub;
-                    console.log('I was here');
-                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
-                    })
-                        .pipe(fs.createWriteStream('./app/temp/' + left.substring(0, 60) + '_' + right.substring(0, 60) + '_CNI.png'))
-                        .on('finish', () => {
-                            console.log(left + '_' + right + '_CNI.png' + "saved");
-                            resolve(promObj);
-                        });
+            var allImageTiles = filterLastImageOfTile(name);
+            console.log('allImageTiles: ' + typeof allImageTiles);
+            if (allImageTiles.length == 1) {
+                resolve(promObj);
+            } else {
+                var lastImage = sortbyDate(allImageTiles);
+                console.log('lastImage: ' + lastImage);
+                var now = name;
+                console.log('now: ' + now);
+                var previous = lastImage[0];
+                console.log('previous: ' + previous);
+                var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/showDifferencesOnImage';
+                if (now.toString().substring(8, 10) == '1C') {
+                    var formData = {
+                        NDVI1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_NDV.png'),
+                        NDVI2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_NDV.png'),
+                        FCC1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_FCC.png') ,
+                        FCC2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_FCC.png')
+                    }
                 } else {
-                    reject(err);
+                    var formData = {
+                        NDVI1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/R10m/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_NDV.png'),
+                        NDVI2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/R10m/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_NDV.png'),
+                        FCC1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/R10m/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_FCC.png') ,
+                        FCC2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/R10m/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_FCC.png')
+                    }
                 }
+                request.post({
+                    url: url,
+                    formData: formData
+                }, function optionalCallback(err, response, body) {
+                    err = err || (response && (response.statusCode === 400 ||
+                        response.statusCode === 502 ||
+                        response.statusCode === 503) && response.statusCode);
+                    if (!err) {
+                        result = [];
+                        var String = body.toString();
+                        var sub = String.substring(10, 21);
+                        console.log(sub);
+                        promObj["tempLoc"] = sub;
+                        console.log('I was here');
+                        getCompImages(promObj,now,previous,1);
+                        getCompImages(promObj,now,previous,2);
+                        promObj['previous'] = previous;
+                        resolve(promObj);
+                    } else {
+                        console.log(body)
+                        reject(err);
+                    }
 
 
-            })
+                })
+            }
         }
-
-        async.eachSeries(promObj.NewName,NDVINowLast, function (err) {
+        async.eachSeries(promObj.newName,NDVINowLast, function (err) {
             if (err) reject(promObj);
             else {
                 resolve(promObj);
@@ -463,6 +548,44 @@ function compareWithLast(promObj){
         });
 
     });
+}
+
+function getCompImages(promObj,now,previous,number){
+    return new Promise((resolve,reject) => {
+        request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/'+ number +'/png', function (err, response, body) {
+        })
+            .pipe(fs.createWriteStream('./app/temp/' + now + '_' + previous + '_1_CNI.png'))
+            .on('finish', () => {
+                console.log(now + '_' + previous + '_'+ number + 'CNI.png' + "saved");
+                resolve(promObj)
+            })
+            .on('error',() =>{
+                reject(promObj);
+            })
+    })
+}
+
+function sortbyDate(array){
+    console.log('array to sort: ' + array);
+    array.sort(function(a,b){
+        a = a.substring(11,19);
+        b = b.substring(11,19);
+       return  a.localeCompare(b);
+
+})
+    return array;
+}
+
+function filterLastImageOfTile(name) {
+    var regex = new RegExp(name.substring(38,44));
+  //  var images = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2B_MSIL1C_20180208T041929_N0206_R090_T46QCJ_20180208T075342.SAFE','S2B_MSIL1C_20180310T041559_N0206_R090_T46QDK_20180310T075716.SAFE']
+    var images = getImagesNames('./app/data');
+    var filter = images.filter(e => regex.test(e));
+    console.log('IMAGES: ' + images);
+    console.log('REGEX: ' + regex);
+    console.log('FILTER: ' + typeof filter);
+    return filter;
+
 }
 
 

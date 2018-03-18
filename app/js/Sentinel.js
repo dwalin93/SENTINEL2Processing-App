@@ -76,10 +76,9 @@ function getTilesOnDate(date){
         },
         success: function(data,status){
             console.log('Content retreived from Copernicus API');
-            //var converted = xmlToJson(data);
-            //console.log(converted)
             var parsed = JSON.parse(JSON.stringify(data));
             console.log(parsed)
+            if(parsed.feed["opensearch:totalResults"]!='0') {
             var coordinates = getTileCoordinates(parsed);
             var names = getTileNames(parsed);
             console.log(coordinates);
@@ -87,6 +86,9 @@ function getTilesOnDate(date){
             console.log(geoJSON)
             addDataToMap(geoJSON,map);
 
+        } else {
+                alert('No data present in the Copernicus API Hub for that specific date')
+            }
         },
         error: function (errorMessage) {
         }

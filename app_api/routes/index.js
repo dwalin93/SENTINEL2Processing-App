@@ -5,9 +5,7 @@ var express = require('express');
 var app = express.Router();
 var request = require('request');
 var fs = require('fs-extra')
-var rp = require('request-promise');
 var unzip = require('unzip');
-var progress = require('request-progress');
 var async = require('async');
 
 
@@ -144,10 +142,15 @@ function downloadSentinel(promObj){
                     resolve(promObj);
                 })
 
+                child.stderr.pipe(process.stderr);
+                child.stdout.pipe(process.stdout);
+
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('bash downloadProducts.sh '+ urls + ' ' + names [{stdio:'ignore'}]);
+                child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
 
+                child.stderr.pipe(process.stderr);
+                child.stdout.pipe(process.stdout);
 
                 child.on("error", function (error) {
                     console.log("child error:", error);

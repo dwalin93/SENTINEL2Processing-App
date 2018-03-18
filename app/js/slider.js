@@ -1,6 +1,3 @@
-/**
- * Created by pglah on 09.02.2018.
- */
 // Slider Function source: https://github.com/jotform/before-after.js
 $(document).ready(function(){
     $('.ba-slider').each(function(){
@@ -125,6 +122,7 @@ function getImage(name,tile,datepicker) {
         },
         error: function (errorMessage) {
             console.log(errorMessage);
+            alert('The tile on this date is not downloaded yet.')
         }
     });
 }

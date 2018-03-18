@@ -9,7 +9,7 @@ do
 (
 cd $scene &&
 if [ -e MTD_MSIL1C.xml ]; then
-	echo scene 2c
+	echo scene 1C
 	cd IMG_DATA
 
 	for image in *.jp2
