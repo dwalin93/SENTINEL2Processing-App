@@ -27,9 +27,9 @@ app.post('/processImages', function (req,res) {
 
     console.log(promObj.Shapefile);
             createResultFolder(promObj)
-            .then(unZIP('./app/data/','./app/data'))
-            .then(moveImage)
-            .then(GDALTranslate)
+            //.then(unZIP('./app/data/','./app/data'))
+            //.then(moveImage)
+            //.then(GDALTranslate)
             .then(processSentinel)
             .then(resp => {
         console.log("THEN:", resp);
@@ -292,7 +292,7 @@ function calcNDVI(promObj){
                     } else {
                         var path = '/IMG_DATA/R10m/'
                     }
-                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
+                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png?width=10980&height=10980', function (err, response, body) {
                     })
                         .pipe(fs.createWriteStream('./app/data/' + name + path + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_NDV.png'))
                             .on('finish', () => {
@@ -352,7 +352,7 @@ function createFCC(promObj){
                     } else {
                         var path = '/IMG_DATA/R10m/'
                     }
-                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
+                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png?width=10980&height=10980', function (err, response, body) {
                     })
                         .pipe(fs.createWriteStream('./app/data/' + name + path + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_FCC.png'))
                         .on('finish', () => {

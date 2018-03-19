@@ -10,7 +10,8 @@ var async = require('async');
 
 
 
-var namesArray = [];
+
+
 
 
 
@@ -48,10 +49,11 @@ app.get('/downloadSentinel', function (req,res){
     console.log('halloDownload');
     var data = req.query.data;
     var Name = req.query.name;
+    namesArray = [];
     for(var i =0;i<Name.length;i++){
         namesArray.push(Name[i]);
     }
-    promObj['Name'] = Name;
+    promObj['Name'] = namesArray;
     console.log(namesArray);
 
 

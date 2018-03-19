@@ -24,7 +24,7 @@ var app = express();
 // code which is executed on every request
 app.use(function (req, res, next) {
     console.log(req.method + ' ' + req.url + ' was requested by ' + req.connection.remoteAddress);
-
+    console.log(req.headers.host);
     res.setHeader('Access-Control-Allow-Origin', "http://"+req.headers.host, '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); //Allow cors
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
