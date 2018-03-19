@@ -2,4 +2,4 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-sh $DIR/TranslateWith1C.sh &&  sh $DIR/TranslateWith2A.sh
+bash $DIR/TranslateWith1C.sh &&  bash $DIR/TranslateWith2A.sh
