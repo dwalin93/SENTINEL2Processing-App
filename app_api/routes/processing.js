@@ -694,7 +694,7 @@ function GDALTranslate(promObj) {
 
 
         } else {
-            child = exec('bash GDAL_Translate.sh', [{stdio:'inherit'}]);
+            child = exec('bash ./GDAL_Translate.sh', [{stdio:'inherit'}]);
 
             child.stderr.pipe(process.stderr);
             child.stdout.pipe(process.stdout);
