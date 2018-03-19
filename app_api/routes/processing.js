@@ -33,7 +33,7 @@ app.post('/processImages', function (req,res) {
             .then(processSentinel)
             .then(resp => {
         console.log("THEN:", resp);
-                res.send(res);
+                res.send('Images Ready');
     }).catch((err) => {
         console.log("CATCH:", err)
 
@@ -254,7 +254,6 @@ function processSentinel(promObj) {
 }
 
 function calcNDVI(promObj){
-    console.log(promObj.shapefile)
     console.log('I am now in calcNDVI');
     return new Promise((resolve,reject) => {
         function NDVI(name,callback) {
