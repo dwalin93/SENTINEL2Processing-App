@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TranslateWith1C.sh" afterPath="$PROJECT_DIR$/TranslateWith1C.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TranslateWith2A.sh" afterPath="$PROJECT_DIR$/TranslateWith2A.sh" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -114,21 +113,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TranslateWith1C.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TranslateWith1C.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="17" column="24" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="17" selection-end-column="24" />
+            <state relative-caret-position="608">
+              <caret line="25" column="77" lean-forward="false" selection-start-line="25" selection-start-column="77" selection-end-line="25" selection-end-column="77" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TranslateWith2A.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TranslateWith2A.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TranslateWith2A.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="654">
-              <caret line="44" column="30" lean-forward="false" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+            <state relative-caret-position="354">
+              <caret line="32" column="93" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="93" />
               <folding />
             </state>
           </provider>
@@ -224,8 +223,8 @@
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
         <option value="$PROJECT_DIR$/GDAL_Translate.sh" />
-        <option value="$PROJECT_DIR$/TranslateWith1C.sh" />
         <option value="$PROJECT_DIR$/TranslateWith2A.sh" />
+        <option value="$PROJECT_DIR$/TranslateWith1C.sh" />
       </list>
     </option>
   </component>
@@ -515,7 +514,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="779416000" />
+    <option name="totallyTimeSpent" value="779791000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -864,18 +863,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
+    <entry file="file://$PROJECT_DIR$/TranslateWith2A.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="17" column="24" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="17" selection-end-column="24" />
+        <state relative-caret-position="354">
+          <caret line="32" column="93" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="93" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TranslateWith2A.sh">
+    <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
-          <caret line="44" column="30" lean-forward="false" selection-start-line="44" selection-start-column="30" selection-end-line="44" selection-end-column="30" />
+        <state relative-caret-position="608">
+          <caret line="25" column="77" lean-forward="false" selection-start-line="25" selection-start-column="77" selection-end-line="25" selection-end-column="77" />
           <folding />
         </state>
       </provider>

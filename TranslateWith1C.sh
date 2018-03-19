@@ -23,6 +23,7 @@ if [[ ! -f $png ]]; then
 	echo here after
 		filename=$image
 		filenameWithoutType=${filename%.*}
+		gdal_translate -of PNG -co TILED=YES  $image $filenameWithoutType.png
 
 	)
 	done
