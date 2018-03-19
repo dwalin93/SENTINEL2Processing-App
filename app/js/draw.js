@@ -1,6 +1,3 @@
-/**
- * Created by pglah
- */
 // Initialise the FeatureGroup to store editable layers
 var convertedCoordArray = [];
 var result;
@@ -30,6 +27,10 @@ var drawOptions = {
 };
 
 
+/**
+ * If one shape is drawn, enable edit only toolbar
+ * @type {{edit: {featureGroup: L.FeatureGroup}, draw: boolean}}
+ */
 var editOnly = {
     edit: {
         featureGroup: drawnItems
@@ -38,8 +39,10 @@ var editOnly = {
 };
 
 
-
-
+/**
+ * Add draw buttons to map
+ * @type {L.Control.Draw}
+ */
 var drawControl = new L.Control.Draw(drawOptions);
 var drawControlEditOnly = new L.Control.Draw(editOnly);
 L.drawLocal.draw.toolbar.buttons.rectangle = 'Show the area you are interested in.';
@@ -57,6 +60,9 @@ map.on('draw:created', function (e) {
     drawControlEditOnly.addTo(map);
 });
 
+/**
+ * Enable deletion of drawn features
+ */
 map.on('draw:deleted', function (e){
     check = drawnItems.getLayers().length;
     if(check===0){
@@ -65,7 +71,9 @@ map.on('draw:deleted', function (e){
     }
 });
 
-
+/**
+ * Extract coordinates of shape
+ */
     map.on('draw:created', function (e) {
         var layer = e.layer;
         console.log(layer);
@@ -78,19 +86,26 @@ map.on('draw:deleted', function (e){
        convertedCoordArray = covertArrayToCopernicusSyntax(round);
        localStorage.setItem('convertedCoordArray',convertedCoordArray);
 
-
-
-
     });
 
-    function concatArray(array){
+/**
+ * Add coordinates to array
+ * @param array
+ * @returns {*|string|Array.<T>|{options, dist}}
+ */
+function concatArray(array){
         var concat = array[0][0][0].concat(array[0][0][1].concat(array[0][0][2].
         concat(array[0][0][3].concat(array[0][0][4]))));
 
         return concat;
     }
 
-    function round2DecimalDeg(array){
+/**
+ * Round elemets to 2 decimal degrees
+ * @param array
+ * @returns {*|Array}
+ */
+function round2DecimalDeg(array){
         var newArray = array.map(function(each_element){
             return Number(parseFloat(each_element).toFixed(2));
         });
@@ -98,7 +113,12 @@ map.on('draw:deleted', function (e){
         return newArray;
     }
 
-    function covertArrayToCopernicusSyntax(array){
+/**
+ * Convert coordinates to Copernicus Syntax
+ * @param array
+ * @returns {string|*}
+ */
+function covertArrayToCopernicusSyntax(array){
         var array2String = array.toString();
         var split = array2String.split(',');
 

@@ -42,4 +42,5 @@ if [ -e MTD_MSIL2A.xml ]; then
 	    fi
 ) & done
 
+wait
 echo --- End Translate with 2A Data ---

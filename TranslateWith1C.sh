@@ -33,5 +33,6 @@ fi
 
 
 ) & done
+wait
 
 echo --- End Translate with 1C Data ---

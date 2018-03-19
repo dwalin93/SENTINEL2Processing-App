@@ -17,8 +17,6 @@ var mapRight = L.map('mapImage2',
 
 function modalImage(modal,image,modalDiv,text,close) {
 // Get the modal
-
-
     var modal = document.getElementById(modal);
     var img = document.getElementById(image);
     console.log(modalDiv);
