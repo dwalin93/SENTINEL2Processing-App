@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GDAL_Translate.sh" afterPath="$PROJECT_DIR$/GDAL_Translate.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TranslateWith1C.sh" afterPath="$PROJECT_DIR$/TranslateWith1C.sh" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -100,7 +100,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GDAL_Translate.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GDAL_Translate.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/GDAL_Translate.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="100">
@@ -110,11 +110,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TranslateWith1C.sh" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TranslateWith1C.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="16" column="15" lean-forward="true" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+            <state relative-caret-position="675">
+              <caret line="27" column="6" lean-forward="false" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -204,7 +204,6 @@
         <option value="$PROJECT_DIR$/app_api/routes/monitoring.js" />
         <option value="$PROJECT_DIR$/app/views/style.css" />
         <option value="$PROJECT_DIR$/movingImage.sh" />
-        <option value="$PROJECT_DIR$/TranslateWith1C.sh" />
         <option value="$PROJECT_DIR$/app/js/shapeFileUpload.js" />
         <option value="$PROJECT_DIR$/app/lib/css/dropzone.css" />
         <option value="$PROJECT_DIR$/app/lib/js/dropzone.js" />
@@ -222,6 +221,7 @@
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
         <option value="$PROJECT_DIR$/GDAL_Translate.sh" />
+        <option value="$PROJECT_DIR$/TranslateWith1C.sh" />
       </list>
     </option>
   </component>
@@ -511,7 +511,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="773534000" />
+    <option name="totallyTimeSpent" value="773809000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -854,18 +854,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="15" lean-forward="true" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GDAL_Translate.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="4" column="37" lean-forward="false" selection-start-line="4" selection-start-column="37" selection-end-line="4" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="27" column="6" lean-forward="false" selection-start-line="27" selection-start-column="6" selection-end-line="27" selection-end-column="6" />
           <folding />
         </state>
       </provider>

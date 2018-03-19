@@ -14,8 +14,10 @@ if [ -e MTD_MSIL1C.xml ]; then
 
 	for image in *.jp2
 	do
+	echo here before
 	if [ ! -f "${image%.png}" ]; then
 	(
+	echo here after
 		filename=$image
 		filenameWithoutType=${filename%.*}
 		gdal_translate -of PNG -co TILED=YES $image $filenameWithoutType.png
