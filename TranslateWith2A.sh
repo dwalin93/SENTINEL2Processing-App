@@ -17,23 +17,29 @@ if [ -e MTD_MSIL2A.xml ]; then
 		do
 		(
 			
-			cd $resolution && 
+			cd $resolution &&
+
+			for png in *.png
+            do
+            echo $png
+            if [[ ! -f $png ]]; then
 				
 				for image in *.jp2
 				do
-				if [ !-f "${image%.png}" ]; then
+
 				(
 						filename=$image
 						filenameWithoutType=${filename%.*}
 						gdal_translate -of PNG -co TILED=YES  $image $filenameWithoutType.png
 					
 				)
+				done
 				fi
 				done
-
 				)
 				done
+
 	    fi
 ) & done
 
-echo --- End Translate with 1C Data ---
+echo --- End Translate with 2A Data ---

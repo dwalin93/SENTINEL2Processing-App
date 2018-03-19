@@ -12,19 +12,25 @@ if [ -e MTD_MSIL1C.xml ]; then
 	echo scene 1C
 	cd IMG_DATA
 
+for png in *.png
+do
+echo $png
+if [[ ! -f $png ]]; then
 	for image in *.jp2
 	do
-	echo here before
-	if [ ! -f "${image%.png}" ]; then
+	echo "${image%.*}"
 	(
 	echo here after
 		filename=$image
 		filenameWithoutType=${filename%.*}
-		gdal_translate -of PNG -co TILED=YES $image $filenameWithoutType.png
+
 	)
-	fi
 	done
 fi
+done
+fi
+
+
 ) & done
 
 echo --- End Translate with 1C Data ---
