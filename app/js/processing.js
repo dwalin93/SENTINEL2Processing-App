@@ -1,8 +1,8 @@
-
-var string = 'S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744_S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744_2_FCC.png'
-console.log(string.substring(38,44))
-
 // OpenCPU Processing
+/**
+ * Calls Process Images route
+ * @constructor
+ */
 function ProcessImages(){
    var url = encodeURI('/processing/processImages');
     $.ajax({
@@ -21,6 +21,9 @@ function ProcessImages(){
     });
 }
 
+/**
+ * Calls the route to compare NDVI images
+ */
 function compareNDVIImages(){
     var url = encodeURI('/processing/compareNDVI');
     $.ajax({
@@ -39,6 +42,9 @@ function compareNDVIImages(){
     })
 }
 
+/**
+ * Shows either the FCC image or the compared result image clicking the checkbox
+ */
 function showDifferences() {
     try {
         var left = parseImageSrc(document.getElementById('left').src);
@@ -57,7 +63,7 @@ function showDifferences() {
 
             }else {
 
-                //S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744_S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744_2_FCC.png
+
                 var oldLeft = left.substring(0,60);
                 var oldRight= left.substring(61,left.length-3);
                 var oldsrcLeft = '/data/' + oldLeft + '.SAFE/IMG_DATA/'+ oldLeft.substring(38,44)+ '_' + oldLeft.substring(11,26) + '_FCC.png';
@@ -71,7 +77,11 @@ function showDifferences() {
         alert('images not compared yet');
     }
 }
-
+/**
+ * Helper function to parse the image source saved in HTML div to desired format
+ * @param imageSrc
+ * @returns {string}
+ */
 function parseImageSrc(imageSrc){
     var replacehost = imageSrc.toString().replace(/^[^_]*S2/g,"S2");
     var replaceImageType = replacehost.substring(0,replacehost.length-7);

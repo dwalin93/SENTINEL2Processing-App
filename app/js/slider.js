@@ -85,8 +85,12 @@ function drags(dragElement, resizeElement, container) {
 }
 
 
-
-
+/**
+ * Gets the image from specified Tile and date for the left or right side depending which datepicker was chosen.
+ * @param name
+ * @param tile
+ * @param datepicker
+ */
 function getImage(name,tile,datepicker) {
     var nameSubstring = name.substring(38,45) + name.substring(11,26);
     var nameTile = name.substring(38,44);
@@ -128,7 +132,11 @@ function getImage(name,tile,datepicker) {
 }
 
 
-
+/**
+ * Parses Date to compare with possible tiles
+ * @param date
+ * @returns {string}
+ */
 function parseDate(date) {
     var stringDate = date.toString();
     var subString = stringDate.substring(4, 16);

@@ -12,13 +12,18 @@ var index = require('./index');
 var nodemailer = require('nodemailer');
 
 
-
-
+/**
+ * Route to upload Shapefiles
+ */
 app.post('/uploadShapeFile', function (req,res){
     console.log(req.files.filename);
     res.send('uploaded Shapes');
 });
 
+/**
+ * Image processing route. Calls functions to create folder, unzip the downloaded data,
+ * moves the images in root directory, creates PNG's from jp2's, creates NDVI and FCC
+ */
 app.post('/processImages', function (req,res) {
     console.log(req.body);
     var promObj = {}
@@ -42,7 +47,9 @@ app.post('/processImages', function (req,res) {
 
 })
 
-
+/**
+ * Looks for new images calling lookDailyUpdate function
+ */
 app.get('/lookForNewImages', function (req,res) {
     var promObj = {};
     console.log(req.body.coordinates);
@@ -59,6 +66,9 @@ app.get('/lookForNewImages', function (req,res) {
     })
 })
 
+/**
+ * Compares NDVI route
+ */
 app.get('/compareNDVI', function (req,res) {
     console.log(req.query);
     var promObj = {};
@@ -76,25 +86,30 @@ app.get('/compareNDVI', function (req,res) {
     })
 })
 
+/**
+ * Automated processing route. Downloads images, unzips them, moves images to root directory,
+ * converts JP2 to PNG, calculates NDVI and FCC, Compares the actual image with the last,
+ * reads user email and writes an email to the user
+ */
 app.post('/automatedProcessing', function (req,res) {
     var promObj = {};
     console.log(req.body.id);
     var ID = req.body.id;
     var Name = req.body.name;
-    promObj['names'] = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE'];
+    promObj['names'] = Name
     promObj['ID'] = ID;
     console.log('promObj.Name ' + promObj.names);
     console.log(promObj.ID);
-    promObj.newName = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE']
+   // promObj.newName = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE']
 
 
 
     filterNewImages(promObj)
-        //.then(downloadSentinel)
-        //.then(unZIP('./app/data/','./app/data'))
-        //.then(moveImage)
-        //.then(GDALTranslate)
-        //.then(processSentinel)
+        .then(downloadSentinel)
+        .then(unZIP('./app/data/','./app/data'))
+        .then(moveImage)
+        .then(GDALTranslate)
+        .then(processSentinel)
         .then(compareWithLast)
         .then(readMail)
         .then(writeMail)
@@ -108,6 +123,12 @@ app.post('/automatedProcessing', function (req,res) {
 
 })
 
+/**
+ * Checks if product is in array
+ * @param array
+ * @param name
+ * @returns {boolean}
+ */
 function checkForItemInArray(array,name){
             regex = new RegExp(name + '.SAFE','g');
             console.log(regex);
@@ -120,6 +141,11 @@ function checkForItemInArray(array,name){
             }
 }
 
+/**
+ * Filters the images which are not downloaded yet
+ * @param promObj
+ * @returns {Promise}
+ */
 function filterNewImages(promObj) {
     return new Promise((resolve, reject) => {
         var namesArray = [];
@@ -147,10 +173,11 @@ function filterNewImages(promObj) {
 }
 
 
-
-
-
-
+/**
+ * Calls bash script to download the new images
+ * @param promObj
+ * @returns {Promise}
+ */
 function downloadSentinel(promObj){
     return new Promise((resolve,reject) =>{
         var sys = require('util'),
@@ -214,7 +241,11 @@ function downloadSentinel(promObj){
     })
 }
 
-
+/**
+ * Looks for new images from Copernicus API
+ * @param promObj
+ * @returns {Promise}
+ */
 function lookDailyUpdate(promObj) {
     return new Promise((resolve,reject) => {
         var url_search = "https://scihub.copernicus.eu/dhus/search?q=";
@@ -242,6 +273,11 @@ function lookDailyUpdate(promObj) {
     })
 }
 
+/**
+ * Calculates FCC and NDVI parallel
+ * @param promObj
+ * @returns {Promise}
+ */
 function processSentinel(promObj) {
     return new Promise((resolve, reject) =>{
         Promise.all([createFCC(promObj), calcNDVI(promObj)])
@@ -253,6 +289,11 @@ function processSentinel(promObj) {
     })
 }
 
+/**
+ * Calculates NDVI calling R script through OpenCPU
+ * @param promObj
+ * @returns {Promise}
+ */
 function calcNDVI(promObj){
     console.log('I am now in calcNDVI');
     return new Promise((resolve,reject) => {
@@ -317,6 +358,11 @@ function calcNDVI(promObj){
     })
 }
 
+/**
+ * Calculates FCC calling R package through OpenCPU
+ * @param promObj
+ * @returns {Promise}
+ */
 function createFCC(promObj){
     return new Promise((resolve,reject) => {
         function FalseColorComposite(name,callback) {
@@ -377,7 +423,11 @@ function createFCC(promObj){
     })
 }
 
-
+/**
+ * Compares two NDVI images calling R package through OpenCPU
+ * @param promObj
+ * @returns {Promise}
+ */
 function compareNDVI(promObj){
     return new Promise((resolve,reject) => {
         var left = parseImageSrc(promObj.leftImage);
@@ -419,6 +469,11 @@ function compareNDVI(promObj){
     });
 }
 
+/**
+ * Writes E-mail to specified account
+ * @param promObj
+ * @returns {Promise}
+ */
 function writeMail(promObj) {
     return new Promise((resolve, reject) => {
         nodemailer.createTestAccount((err, account) => {
@@ -467,6 +522,11 @@ function writeMail(promObj) {
     })
 }
 
+/**
+ * Reads users email
+ * @param promObj
+ * @returns {Promise}
+ */
 function readMail(promObj) {
     return new Promise((resolve,reject) =>{
         var readStream = fs.createReadStream('./data' + '/mail.txt', 'utf8');
@@ -484,6 +544,12 @@ function readMail(promObj) {
     })
 
 }
+
+/**
+ * Compares actual image with previous automatically
+ * @param promObj
+ * @returns {Promise}
+ */
 function compareWithLast(promObj){
     return new Promise((resolve,reject) => {
         function NDVINowLast(name,callback) {
@@ -551,6 +617,14 @@ function compareWithLast(promObj){
     });
 }
 
+/**
+ * Gets the compared images from OCPU
+ * @param promObj
+ * @param now
+ * @param previous
+ * @param number
+ * @returns {Promise}
+ */
 function getCompImages(promObj,now,previous,number){
     return new Promise((resolve,reject) => {
         var counter = 1;
@@ -569,6 +643,11 @@ function getCompImages(promObj,now,previous,number){
     })
 }
 
+/**
+ * Sorts array by date
+ * @param array
+ * @returns {*}
+ */
 function sortbyDate(array){
     console.log('array to sort: ' + array);
     array.sort(function(a,b){
@@ -580,6 +659,11 @@ function sortbyDate(array){
     return array;
 }
 
+/**
+ * Filters images from specified tile
+ * @param name
+ * @returns {*|Array.<T>}
+ */
 function filterLastImageOfTile(name) {
     var regex = new RegExp(name.substring(38,44));
   //  var images = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2B_MSIL1C_20180208T041929_N0206_R090_T46QCJ_20180208T075342.SAFE','S2B_MSIL1C_20180310T041559_N0206_R090_T46QDK_20180310T075716.SAFE']
@@ -599,6 +683,11 @@ function parseImageSrc(imageSrc){
     return replaceImageType;
 }
 
+/**
+ * Calls basch script movingImage.sh to move images to root directory
+ * @param promObj
+ * @returns {Promise}
+ */
 function moveImage(promObj){
     console.log('I am Moving')
     return new Promise((resolve, reject) => {
@@ -660,7 +749,12 @@ function moveImage(promObj){
 }
 
 
-
+/**
+ * Calls bash script GDAL_Translate.sh converting jp2 files to png using GDAL_Translate function
+ * @param promObj
+ * @returns {Promise}
+ * @constructor
+ */
 function GDALTranslate(promObj) {
     console.log('ITS GDAL NOW');
     return new Promise((resolve, reject) => {
@@ -718,7 +812,13 @@ function GDALTranslate(promObj) {
 }
 
 
-
+/**
+ * unzips folders
+ * @param path
+ * @param dest
+ * @param promObj
+ * @returns {Promise}
+ */
 function unZIP(path,dest,promObj) {
     return new Promise((resolve, reject) => {
         try {
@@ -745,13 +845,22 @@ function unZIP(path,dest,promObj) {
     })
 }
 
-
+/**
+ * Get all images
+ * @param path
+ * @returns {*|Array.<T>}
+ */
 function getImagesNames(path){
     return fs.readdirSync(path).filter(function (file) {
         return fs.statSync(path+'/'+file).isDirectory();
     });
 }
 
+/**
+ * Create result folder
+ * @param promObj
+ * @returns {Promise}
+ */
 function createResultFolder(promObj) {
     console.log('creating result');
     return new Promise((resolve, reject) => {
@@ -772,12 +881,4 @@ function createResultFolder(promObj) {
     }
 }
 
-/**module.exports = {
-    app,
-    GDALTranslate,
-    moveImage,
-    unZIP,
-    processSentinel
-};
-**/
 module.exports = app;

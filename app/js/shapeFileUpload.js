@@ -1,5 +1,5 @@
 /**
- * Created by pglah on 06.03.2018.
+ * Dropzone.js options enabeling the upload of Shapefiles
  */
 Dropzone.options.uploadWidget = {
     parallelUploads: 15,

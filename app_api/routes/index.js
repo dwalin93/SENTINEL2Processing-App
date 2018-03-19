@@ -10,17 +10,13 @@ var async = require('async');
 
 
 
-
-
-
-
-
-
 app.get('/#', function (req, res) {
     res.sendFile(__dirname + '/app/index.html');
 });
 
-
+/**
+ * Sends Request to Copernicus Api to receive products
+ */
 app.get('/getSentinel', function (req,res){
     var promObj = {};
     console.log('hallo');
@@ -35,7 +31,7 @@ app.get('/getSentinel', function (req,res){
             'sendImmediately': false
     };
 
-    request(url_search + 'footprint:"Intersects(POLYGON(('+promObj.coordinates+')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-7DAYS TO NOW] ' + '&rows=2' + '&orderby=beginposition desc&format=json',{auth: auth},function(error, response, body) {
+    request(url_search + 'footprint:"Intersects(POLYGON(('+promObj.coordinates+')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-14DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json',{auth: auth},function(error, response, body) {
             console.log(body);
             res.send(body);
 
@@ -43,9 +39,12 @@ app.get('/getSentinel', function (req,res){
     });
 });
 
+/**
+ * Route to Download the received data from Copernicus API
+ * Calls function fownloadSentinel
+ */
 app.get('/downloadSentinel', function (req,res){
     var promObj = {};
-   // url_search = 'https://scihub.copernicus.eu/dhus/odata/v1/Products';
     console.log('halloDownload');
     var data = req.query.data;
     var Name = req.query.name;
@@ -78,7 +77,9 @@ app.get('/downloadSentinel', function (req,res){
 
 });
 
-
+/**
+ * Gets tiles on specified date from Copernicus API
+ */
 app.get('/getTilesOnDate', function (req,res) {
     var promObj = {};
     promObj['date'] = req.query.date;
@@ -101,6 +102,11 @@ app.get('/getTilesOnDate', function (req,res) {
 
 });
 
+/**
+ * Function to create data folder
+ * @param promObj
+ * @returns {Promise}
+ */
 function createResultFolder(promObj) {
     return new Promise((resolve, reject) => {
         try {
@@ -116,6 +122,11 @@ function createResultFolder(promObj) {
     })
 }
 
+/**
+ * Function calling the bash script to download products
+ * @param promObj
+ * @returns {Promise}
+ */
 function downloadSentinel(promObj){
         return new Promise((resolve,reject) =>{
             var sys = require('util'),
@@ -175,6 +186,11 @@ function downloadSentinel(promObj){
         })
 }
 
+/**
+ * Parses Array for use in bash
+ * @param array
+ * @returns {*}
+ */
 function parseArrayForBash(array){
     var replaceComma = JSON.stringify(array).replace(/,/g,' ');
     var replaceBracketsOpen = replaceComma.replace(/\[/g,'(');
@@ -183,7 +199,12 @@ function parseArrayForBash(array){
 
     return result;
 }
-
+/**
+ * Unused function to download products only with node, does not work
+ * @param promObj
+ * @param req
+ * @param res
+ */
 function downloadSentinelAsync(promObj,req,res) {
          async.eachOfSeries(promObj.requestURLS,function (value,i,callback) {
             makeRequest(value,i,function (err,value) {

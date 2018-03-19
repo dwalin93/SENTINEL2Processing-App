@@ -1,5 +1,5 @@
 /**
- * Created by pglah on 23.10.2017.
+ * Initial function to look for Sentinel Images
  */
 function getSentinelData(){
     var url = encodeURI('/getSentinel?');
@@ -39,6 +39,11 @@ function getSentinelData(){
     });
 }
 
+/**
+ * Calls the /downloadSentinel route to download images
+ * @param ID of downloaded images
+ * @param Name of downloaded images
+ */
 function downloadSentinelData(ID,Name){
     var url = encodeURI('/downloadSentinel?');
     $.ajax({
@@ -62,6 +67,10 @@ function downloadSentinelData(ID,Name){
     });
 }
 
+/**
+ * Gets the Tiles from specified date
+ * @param date from jQuery datepicker
+ */
 function getTilesOnDate(date){
     var url = encodeURI('/getTilesOnDate');
     console.log('hier1');
@@ -96,6 +105,11 @@ function getTilesOnDate(date){
     });
 }
 
+/**
+ * If clicked on feature tie, show the corresponding image
+ * @param feature a Single Tile
+ * @param layer all Tiles
+ */
 function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.name) {
         layer.bindTooltip(feature.properties.name.substring(38,44));
@@ -118,6 +132,12 @@ function onEachFeature(feature, layer) {
             //enableDatepicker();
     }
 }
+
+/**
+ * Adds the found tiles to the map
+ * @param data
+ * @param map
+ */
 function addDataToMap(data, map) {
    var feature = L.geoJson(data, {
         onEachFeature: onEachFeature
@@ -130,7 +150,11 @@ feature.on('click', function () {
 
 }
 
-
+/**
+ * Gets each Product ID from the json received
+ * @param JSONFile
+ * @returns {Array.<*>}
+ */
 function extractID(JSONFile){
     console.log(JSONFile)
     var result = [];
@@ -156,6 +180,11 @@ function extractID(JSONFile){
     return array;
 }
 
+/**
+ * Get each product name from received JSON
+ * @param JSONFile
+ * @returns {Array.<*>}
+ */
 function extractName(JSONFile){
     var result = [];
 
@@ -179,6 +208,11 @@ function extractName(JSONFile){
     return array;
 }
 
+/**
+ * Gets coordinates from JSON
+ * @param JSONFile
+ * @returns {*}
+ */
 function getTileCoordinates(JSONFile){
     var result = [];
 
@@ -192,6 +226,11 @@ function getTileCoordinates(JSONFile){
     return convertedCoordinates;
 }
 
+/**
+ * Get the names of each feature for the Tiles
+ * @param JSONFile
+ * @returns {Array}
+ */
 function getTileNames(JSONFile){
     var result = [];
 
@@ -208,6 +247,11 @@ function getTileNames(JSONFile){
 
 }
 
+/**
+ * Transform coordinates in Leaflet coordinates
+ * @param data
+ * @returns {Array}
+ */
 function getCoordsForMap(data){
    var String = data.toString();
        var replace1 = String.replace(/POLYGON \(\(/g,'[[');
@@ -224,6 +268,12 @@ function getCoordsForMap(data){
 
 }
 
+/**
+ * Creates a GeoJSON including coordinates and name of each feature
+ * @param coordinates
+ * @param names
+ * @returns {string}
+ */
 function createGeoJSON(coordinates,names){
     var geoJSON = '{ "type": "FeatureCollection", "features":[ ';
     for(i=0;i<coordinates.length;i++){
@@ -252,6 +302,9 @@ var downloadData = L.easyButton('fa-globe', function(){
 ).addTo(map);
 
 
+/**
+ * Enables the download button if a Shapefile was uploaded
+ */
 var checkShape = function () {
     if (localStorage.getItem('Shapefile') != null){
         downloadData.enable();

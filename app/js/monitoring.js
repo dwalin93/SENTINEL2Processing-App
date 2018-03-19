@@ -1,4 +1,8 @@
-/**window.setInterval(function(){
+/**
+ * Call function every day at 1 o'clock
+ */
+/**
+window.setInterval(function(){
     var date = new Date();
     console.log('checking')
     if(date.getHours() === 1 && date.getMinutes() === 0){
@@ -7,6 +11,10 @@
     }
 }, 60000);
 
+/**
+ * Check if one day has passed
+ * @returns {boolean}
+ */
 function oneDayPassed(){
     var date = new Date().toLocaleDateString();
 
@@ -16,9 +24,13 @@ function oneDayPassed(){
     localStorage.yourapp_date = date;
     return true;
 }
-**/
+
+/**
+ * If one day has passed, look for new images
+ * @returns {boolean}
+ */
 function lookForNewData() {
-   /** if (!oneDayPassed()) {
+  /**  if (!oneDayPassed()) {
         return false;
     } else {
     **/
@@ -53,6 +65,11 @@ function lookForNewData() {
     //}
 }
 
+/**
+ * Processes the new images automatically
+ * @param ID
+ * @param Name
+ */
 function automatedProcessing(ID,Name) {
     console.log(ID);
     var url = encodeURI('/processing/automatedProcessing');
@@ -75,6 +92,10 @@ function automatedProcessing(ID,Name) {
     });
 }
 
+/**
+ * Inserts the new arrived images into a link table
+ * @param data
+ */
 function insertDataInTable(data) {
     var List = $('#images');
     $.each(data.newName, function(i)
@@ -83,7 +104,7 @@ function insertDataInTable(data) {
             var li = $('<li/>')
                 .addClass('ui-menu-item')
                 .attr('now', data.newName[i])
-                .attr('prev',data.previous)
+                .attr('prev',data.previous[i])
                 .attr('temp',data.tempLoc[i])
                 .attr('role', 'menuitem')
                 .appendTo(List);
@@ -91,7 +112,7 @@ function insertDataInTable(data) {
                 .addClass('ui-all')
                 .text(data.newName[i].substring(38, 44) + ' from ' + data.newName[i].substring(11, 19))
                 .attr('now', data.newName[i])
-                .attr('prev', data.previous)
+                .attr('prev', data.previous[i])
                 .attr('ID', data.ID[i])
                 .attr('temp',data.tempLoc)
                 .appendTo(li);
@@ -107,6 +128,11 @@ $(function() {
         showComparedImages(now,prev);
     });
 });
+/**
+ * Show images when clicked on link
+ * @param now
+ * @param prev
+ */
 function showComparedImages(now,prev) {
     var currentImage = './temp/' + now + '_' + prev + '_1_CNI.png';
     var previousImage = './temp/' + now + '_' + prev + '_2_CNI.png';

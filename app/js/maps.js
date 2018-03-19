@@ -1,8 +1,14 @@
+/**
+ * The Leaflet base map
+ * @type {*}
+ */
 var map = L.map('map');
 
 $(window).on("resize", function () { $("#map").height($(window).height()); map.invalidateSize(); }).trigger("resize");
 
-
+/**
+ * Initialize Leaflet Map
+ */
 $(document).ready(function() {
     console.log(localStorage.getItem('Shapefile'));
     map.setView([16.809141, 96.156120], 6);
@@ -32,6 +38,9 @@ $(document).ready(function() {
 
     L.control.layers(baseMaps).addTo(map);
 
+    /**
+     * Show actual Shapefile
+     */
     if(localStorage.getItem("Shapefile") == null){
         document.getElementById('ShapeFile').innerHTML = 'No Shapefile Uploaded'
     } else {

@@ -1,5 +1,5 @@
 /**
- * Created by pglah on 06.02.2018.
+ * The two maps the images are inserted in
  */
 var mapLeft = L.map('mapImage1',
     {
@@ -15,6 +15,14 @@ var mapRight = L.map('mapImage2',
         crs: L.CRS.Simple
     });
 
+/**
+ * Insert images into the Modal
+ * @param modal
+ * @param image
+ * @param modalDiv
+ * @param text
+ * @param close
+ */
 function modalImage(modal,image,modalDiv,text,close) {
 // Get the modal
     var modal = document.getElementById(modal);
@@ -36,6 +44,11 @@ function modalImage(modal,image,modalDiv,text,close) {
     }
 }
 
+/**
+ * Initialize the map with the images
+ * @param map
+ * @param image
+ */
 function initLeafletimage(map,image){
     console.log(image.src)
     var imgDimensions={width:600, height:600}
