@@ -17,6 +17,7 @@ due to their visual overview. This Web-App should faciliate the automated detect
 <b> OpenCPU <b>
 
 <h2> Installation </h2>
+
 <p> After Node, Gdal and OpenCPU are installed, the R Package  must be installed on your own server or on the public OpenCPU server.
 The R package can be found here: <a href="https://github.com/dwalin93/SENTINEL2Processing"> SENTINEL2Processing Package</a>
 After the R package was sucessfully installed, just run <code> npm install </code> and then <code> npm start </code> to run the application. </p>
