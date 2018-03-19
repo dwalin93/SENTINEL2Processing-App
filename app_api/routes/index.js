@@ -54,7 +54,7 @@ app.get('/downloadSentinel', function (req,res){
         namesArray.push(Name[i]);
     }
     promObj['Name'] = namesArray;
-    console.log(namesArray);
+    console.log(promObj.Name);
 
 
     requestarray = [];
@@ -124,6 +124,7 @@ function downloadSentinel(promObj){
 
             var urls = parseArrayForBash(promObj.requestURLS);
             var names = parseArrayForBash(promObj.Name);
+            console.log(names);
 
             if (process.platform === "win32") {
                 console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
@@ -149,7 +150,7 @@ function downloadSentinel(promObj){
 
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('bash downloadProducts.sh '+ urls + ' ' + names [{stdio:'inherit'}]);
+                child = exec('bash downloadProducts.sh '+ urls + ' ' + names, [{stdio:'inherit'}]);
 
                 child.stderr.pipe(process.stderr);
                 child.stdout.pipe(process.stdout);

@@ -23,7 +23,7 @@ function getSentinelData(){
             if(parsed.feed["opensearch:totalResults"]!='0') {
                 var ID = extractID(parsed);
                 var Name = extractName(parsed);
-                console.log(ID);
+                console.log(Name);
                 downloadSentinelData(ID, Name);
                // ProcessImages();
                 //test();
@@ -40,7 +40,7 @@ function getSentinelData(){
 }
 
 function downloadSentinelData(ID,Name){
-    console.log(ID);
+    console.log(Name);
     var url = encodeURI('/downloadSentinel?');
     $.ajax({
         type: 'GET',
