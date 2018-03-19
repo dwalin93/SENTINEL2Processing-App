@@ -44,7 +44,6 @@ function downloadSentinelData(ID,Name){
     $.ajax({
         type: 'GET',
         url:  url,
-        timeout:5000,
         dataType:'json',
         data: {
             data: ID,
