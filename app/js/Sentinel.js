@@ -265,3 +265,7 @@ var checkShape = function () {
     }
 }
 
+window.setInterval(function(){
+    checkShape();
+}, 1000);
+
