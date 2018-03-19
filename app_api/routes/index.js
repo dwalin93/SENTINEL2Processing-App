@@ -67,9 +67,11 @@ app.get('/downloadSentinel', function (req,res){
        .then(downloadSentinel)
     .then(resp => {
         console.log("THEN:", resp);
-        res.send('200');
+        res.send(resp);
+        res.end();
     }).catch((err) => {
-        console.log("CATCH:", err)
+        console.log("CATCH:", err);
+       res.send(err);
 
     })
 

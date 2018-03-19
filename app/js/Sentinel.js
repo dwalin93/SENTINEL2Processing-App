@@ -40,7 +40,6 @@ function getSentinelData(){
 }
 
 function downloadSentinelData(ID,Name){
-    console.log(Name);
     var url = encodeURI('/downloadSentinel?');
     $.ajax({
         type: 'GET',
@@ -51,6 +50,8 @@ function downloadSentinelData(ID,Name){
             name: Name
         },
         success: function(data,status){
+            console.log(data);
+            console.log(status);
             alert('Products downloaded. Processing now.');
             if (localStorage.getItem('Shapefile') !=''){
                 //ProcessImages();

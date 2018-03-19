@@ -1,4 +1,4 @@
-window.setInterval(function(){
+/**window.setInterval(function(){
     var date = new Date();
     console.log('checking')
     if(date.getHours() === 1 && date.getMinutes() === 0){
@@ -16,11 +16,12 @@ function oneDayPassed(){
     localStorage.yourapp_date = date;
     return true;
 }
-
+**/
 function lookForNewData() {
-    if (!oneDayPassed()) {
+   /** if (!oneDayPassed()) {
         return false;
     } else {
+    **/
         console.log('I AM RUNNING');
         if (localStorage.getItem('convertedCoordArray') != null) {
             var url = encodeURI('/processing/lookForNewImages');
@@ -49,7 +50,7 @@ function lookForNewData() {
                 }
             });
         }
-    }
+    //}
 }
 
 function automatedProcessing(ID,Name) {

@@ -386,6 +386,8 @@ function compareNDVI(promObj){
         var formData = {
             NDVI1: fs.createReadStream('./app/data/' + left + 'NDV.png'),
             NDVI2: fs.createReadStream('./app/data/' + right + 'NDV.png'),
+            TCI1: fs.createReadStream('./app/data/' + left + 'TCI.png'),
+            TCI2: fs.createReadStream('./app/data/' + right + 'TCI.png')
         }
 
         request.post({
@@ -402,13 +404,11 @@ function compareNDVI(promObj){
                 console.log(sub);
                 promObj["tempLoc"] = sub;
                 console.log('I was here');
-                request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png', function (err, response, body) {
-                })
-                    .pipe(fs.createWriteStream('./app/temp/'+ left.substring(0,60)+'_' + right.substring(0,60) +'_CNI.png'))
-                    .on('finish', () => {
-                        console.log(left + '_' + right + '_CNI.png' + "saved");
-                        resolve(promObj);
-                    });
+                left = left.substring(0,60);
+                right = right.substring(0,60);
+                getCompImages(promObj,left,right,1);
+                getCompImages(promObj,left,right,2);
+                resolve(promObj);
             } else {
                 reject(err);
             }
@@ -502,15 +502,15 @@ function compareWithLast(promObj){
                     var formData = {
                         NDVI1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_NDV.png'),
                         NDVI2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_NDV.png'),
-                        FCC1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_FCC.png') ,
-                        FCC2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_FCC.png')
+                        TCI1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_TCI.png') ,
+                        TCI2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_TCI.png')
                     }
                 } else {
                     var formData = {
                         NDVI1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/R10m/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_NDV.png'),
                         NDVI2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/R10m/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_NDV.png'),
-                        FCC1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/R10m/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_FCC.png') ,
-                        FCC2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/R10m/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_FCC.png')
+                        TCI1: fs.createReadStream('./app/data/' + now + '/IMG_DATA/R10m/' + now.toString().substring(38, 44) + '_' + now.toString().substring(11, 26) + '_TCI.png') ,
+                        TCI2: fs.createReadStream('./app/data/' + previous + '/IMG_DATA/R10m/' + previous.toString().substring(38, 44) + '_' + previous.toString().substring(11, 26) + '_TCI.png')
                     }
                 }
                 request.post({
@@ -530,7 +530,7 @@ function compareWithLast(promObj){
                         getCompImages(promObj,now,previous,1);
                         getCompImages(promObj,now,previous,2);
                         promObj['previous'] = previous;
-                        resolve(promObj);
+                        callback();
                     } else {
                         console.log(body)
                         reject(err);
@@ -552,12 +552,15 @@ function compareWithLast(promObj){
 
 function getCompImages(promObj,now,previous,number){
     return new Promise((resolve,reject) => {
+        var counter = 1;
+        console.log('I AM HERE ' + counter + ' TIMES')
         request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/'+ number +'/png', function (err, response, body) {
         })
-            .pipe(fs.createWriteStream('./app/temp/' + now + '_' + previous + '_1_CNI.png'))
+            .pipe(fs.createWriteStream('./app/temp/' + now + '_' + previous + '_' + number + '_CNI.png'))
             .on('finish', () => {
                 console.log(now + '_' + previous + '_'+ number + 'CNI.png' + "saved");
                 resolve(promObj)
+                counter++;
             })
             .on('error',() =>{
                 reject(promObj);
@@ -599,7 +602,7 @@ function moveImage(promObj){
     console.log('I am Moving')
     return new Promise((resolve, reject) => {
             var sys = require('util'),
-                exec = require('child_process').spawn,
+                exec = require('child_process').exec,
                 child;
 
             var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -659,7 +662,7 @@ function GDALTranslate(promObj) {
     console.log('ITS GDAL NOW');
     return new Promise((resolve, reject) => {
         var sys = require('util'),
-            exec = require('child_process').spawn,
+            exec = require('child_process').exec,
             child;
 
         var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));

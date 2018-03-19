@@ -1,6 +1,7 @@
-/**
- * Created by pglah on 05.03.2018.
- */
+
+var string = 'S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744_S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744_2_FCC.png'
+console.log(string.substring(38,44))
+
 // OpenCPU Processing
 function ProcessImages(){
    var url = encodeURI('/processing/processImages');
@@ -42,11 +43,30 @@ function showDifferences() {
     try {
         var left = parseImageSrc(document.getElementById('left').src);
         var right = parseImageSrc(document.getElementById('right').src);
+        console.log(left);
 
-        var differenceImage = '/temp/' + left.substring(0, 60) + '_' + right.substring(0, 60) + '_CNI.png';
+        $("input:checkbox").change(function() {
+            var ischecked= $(this).is(':checked');
+            if(ischecked) {
+                var differenceLeft = '/temp/' + left.substring(0, 60) + '_' + right.substring(0, 60) + '_2_CNI.png';
+                var differenceRight = '/temp/' + left.substring(0, 60) + '_' + right.substring(0, 60) + '_1_CNI.png';
+                console.log(differenceLeft);
 
-        document.getElementById('left').src = differenceImage;
-        document.getElementById('right').src = differenceImage;
+                document.getElementById('left').src = differenceLeft;
+                document.getElementById('right').src = differenceRight;
+
+            }else {
+
+                //S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744_S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744_2_FCC.png
+                var oldLeft = left.substring(0,60);
+                var oldRight= left.substring(61,left.length-3);
+                var oldsrcLeft = '/data/' + oldLeft + '.SAFE/IMG_DATA/'+ oldLeft.substring(38,44)+ '_' + oldLeft.substring(11,26) + '_FCC.png';
+                var oldsrcRight = '/data/' + oldRight + '.SAFE/IMG_DATA/'+ oldRight.substring(38,44) + '_' + oldRight.substring(11,26) + '_FCC.png';
+                document.getElementById('left').src = oldsrcLeft;
+                document.getElementById('right').src = oldsrcRight;
+                }
+
+            })
     } catch (err){
         alert('images not compared yet');
     }
