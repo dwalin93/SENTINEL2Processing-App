@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/Sentinel.js" afterPath="$PROJECT_DIR$/app/js/Sentinel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/maps.js" afterPath="$PROJECT_DIR$/app/js/maps.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/modal.js" afterPath="$PROJECT_DIR$/app/js/modal.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/monitoring.js" afterPath="$PROJECT_DIR$/app/js/monitoring.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/processing.js" afterPath="$PROJECT_DIR$/app/js/processing.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/shapeFileUpload.js" afterPath="$PROJECT_DIR$/app/js/shapeFileUpload.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/slider.js" afterPath="$PROJECT_DIR$/app/js/slider.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_api/routes/index.js" afterPath="$PROJECT_DIR$/app_api/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_api/routes/processing.js" afterPath="$PROJECT_DIR$/app_api/routes/processing.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movingImage.sh" afterPath="$PROJECT_DIR$/movingImage.sh" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -33,18 +24,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="maps.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/maps.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="716">
-              <caret line="41" column="28" lean-forward="false" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
-              <folding>
-                <marker date="1521481809991" expanded="true" signature="453:459" ph="©" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_api/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -65,7 +44,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="processing.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="processing.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="548">
@@ -106,6 +85,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-219">
               <caret line="135" column="45" lean-forward="false" selection-start-line="135" selection-start-column="45" selection-end-line="135" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="movingImage.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/movingImage.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -212,7 +201,6 @@
         <option value="$PROJECT_DIR$/app/js/clientFunctions.js" />
         <option value="$PROJECT_DIR$/app_api/routes/monitoring.js" />
         <option value="$PROJECT_DIR$/app/views/style.css" />
-        <option value="$PROJECT_DIR$/movingImage.sh" />
         <option value="$PROJECT_DIR$/app/lib/css/dropzone.css" />
         <option value="$PROJECT_DIR$/app/lib/js/dropzone.js" />
         <option value="$PROJECT_DIR$/mail" />
@@ -233,6 +221,7 @@
         <option value="$PROJECT_DIR$/app/js/slider.js" />
         <option value="$PROJECT_DIR$/app_api/routes/index.js" />
         <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
+        <option value="$PROJECT_DIR$/movingImage.sh" />
       </list>
     </option>
   </component>
@@ -522,7 +511,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="787791000" />
+    <option name="totallyTimeSpent" value="788404000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -683,13 +672,6 @@
     <entry file="file://$PROJECT_DIR$/exportToHTML/maps.js.html" />
     <entry file="file://$PROJECT_DIR$/app_api/routes/monitoring.js" />
     <entry file="file://$PROJECT_DIR$/bin/www">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/movingImage.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -880,6 +862,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="548">
           <caret line="882" column="0" lean-forward="true" selection-start-line="882" selection-start-column="0" selection-end-line="882" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/movingImage.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
           <folding />
         </state>
       </provider>
