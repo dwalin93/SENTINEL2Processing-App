@@ -54,7 +54,7 @@ function downloadSentinelData(ID,Name){
             console.log(status);
             alert('Products downloaded. Processing now.');
             if (localStorage.getItem('Shapefile') !=''){
-                //ProcessImages();
+                ProcessImages();
             }
         },
         error: function (errorMessage) {
