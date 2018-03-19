@@ -147,7 +147,7 @@ function downloadSentinel(promObj){
 
             } else {
                 console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-                child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
+                child = exec('bash downloadProducts.sh '+ urls + ' ' + names [{stdio:'inherit'}]);
 
                 child.stderr.pipe(process.stderr);
                 child.stdout.pipe(process.stdout);
