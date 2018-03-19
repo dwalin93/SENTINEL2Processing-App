@@ -154,7 +154,7 @@ function filterNewImages(promObj) {
 function downloadSentinel(promObj){
     return new Promise((resolve,reject) =>{
         var sys = require('util'),
-            exec = require('child_process').spawn,
+            exec = require('child_process').exec,
             child;
 
         var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
@@ -164,7 +164,7 @@ function downloadSentinel(promObj){
 
         if (process.platform === "win32") {
             console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
-            child = exec(directory + '\\downloadProducts.sh ',[urls,names], {shell: true});
+            child = exec(directory + '\\downloadProducts.sh ' + urls + ' ' + names, [{stdio:'inherit'}]);
 
             child.stdout.on('data', (data) => {
                 console.log(`stdout: ${data}`);
@@ -191,8 +191,10 @@ function downloadSentinel(promObj){
 
         } else {
             console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-            child = exec('bash downloadProducts.sh '+ urls + ' ' + names);
+            child = exec('bash downloadProducts.sh '+ urls + ' ' + names, [{stdio:'inherit'}]);
 
+            child.stderr.pipe(process.stderr);
+            child.stdout.pipe(process.stdout);
 
             child.on("error", function (error) {
                 console.log("child error:", error);
@@ -610,9 +612,8 @@ function moveImage(promObj){
 
             if (process.platform === "win32") {
                 console.log('I am Windows');
-                child = exec(directory + '\\movingImage.sh',{stdio:'inherit',shell:true});
+                child = exec(directory + '\\movingImage.sh',{stdio:'inherit'});
 
-                console.log(child.pid);
 
                     child.on("error", function (error) {
                         console.log("child error:", error);
@@ -635,7 +636,10 @@ function moveImage(promObj){
 
 
 } else {
-                child = exec('bash ./movingImage.sh',{shell:true});
+                child = exec('bash ./movingImage.sh', [{stdio:'inherit'}]);
+
+                child.stderr.pipe(process.stderr);
+                child.stdout.pipe(process.stdout);
 
                 child.on("error", function (error) {
                     console.log("child error:", error);
@@ -669,7 +673,7 @@ function GDALTranslate(promObj) {
         console.log(directory);
 
         if (process.platform === "win32") {
-            child = exec(directory + '\\GDAL_Translate.sh',{shell:true,stdio:[0,1,2]});
+            child = exec(directory + '\\GDAL_Translate.sh', [{stdio:'inherit'}]);
             console.log('I am Windows')
 
             child.on("error", function (error) {
@@ -690,7 +694,10 @@ function GDALTranslate(promObj) {
 
 
         } else {
-            child = exec('bash GDAL_Translate.sh', {shell: true});
+            child = exec('bash GDAL_Translate.sh', [{stdio:'inherit'}]);
+
+            child.stderr.pipe(process.stderr);
+            child.stdout.pipe(process.stdout);
 
             child.on("error", function (error) {
                 console.log("child error:", error);
