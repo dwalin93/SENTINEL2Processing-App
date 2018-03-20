@@ -845,7 +845,7 @@ function unZIP(path,dest,promObj) {
 
                 }
                 else{
-                    resolve(promObj);
+                    reject(promObj);
                 }
 
             }

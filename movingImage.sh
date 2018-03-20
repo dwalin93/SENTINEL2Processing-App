@@ -8,9 +8,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 for scene in $DIR/app/data/*.SAFE
 do
 (
+        cd $scene
 
-        cd $scene && cd GRANULE && cd * && mv IMG_DATA ../../
+        if [[ !  -d IMG_DATA  ]]; then
 
+        cd GRANULE && cd * && mv IMG_DATA ../../
+fi
 )
 done
 wait
