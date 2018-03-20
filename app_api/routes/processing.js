@@ -191,8 +191,8 @@ function downloadSentinel(promObj){
 
         var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
 
-        var urls = index.parseArrayForBash(promObj.newID);
-        var names = index.parseArrayForBash(promObj.newName);
+        var urls = index.parseArrayForBash(promObj.ID);
+        var names = index.parseArrayForBash(promObj.names);
 
         if (process.platform === "win32") {
             console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
