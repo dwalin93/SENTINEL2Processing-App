@@ -35,9 +35,9 @@ app.post('/processImages', function (req,res) {
 
     console.log('NAMES ' + promObj.names);
             createResultFolder(promObj)
-            //.then(unZIP('./app/data/','./app/data'))
-            //.then(moveImage)
-            //.then(GDALTranslate)
+            .then(unZIP('./app/data/','./app/data'))
+            .then(moveImage)
+            .then(GDALTranslate)
             .then(processSentinel)
             .then(resp => {
         console.log("THEN:", resp);
@@ -110,10 +110,10 @@ app.post('/automatedProcessing', function (req,res) {
 
 
     filterNewImages(promObj)
-        //.then(downloadSentinel)
-        //.then(unZIP('./app/data/','./app/data'))
-       // .then(moveImage)
-        //.then(GDALTranslate)
+        .then(downloadSentinel)
+        .then(unZIP('./app/data/','./app/data'))
+        .then(moveImage)
+        .then(GDALTranslate)
         .then(processSentinelNewImages)
         .then(compareWithLast)
         .then(readMail)

@@ -1,7 +1,6 @@
 /**
  * Call function every day at 1 o'clock
  */
-/**
 window.setInterval(function(){
     var date = new Date();
     console.log('checking')
@@ -30,10 +29,9 @@ function oneDayPassed(){
  * @returns {boolean}
  */
 function lookForNewData() {
-  /**  if (!oneDayPassed()) {
+    if (!oneDayPassed()) {
         return false;
     } else {
-    **/
         console.log('I AM RUNNING');
         if (localStorage.getItem('convertedCoordArray') != null) {
             var url = encodeURI('/processing/lookForNewImages');
@@ -63,7 +61,7 @@ function lookForNewData() {
                 }
             });
         }
-    //}
+    }
 }
 
 /**

@@ -8,6 +8,11 @@ html,body{
     font-size:0;
     margin:0 auto;
 }
+
+.btn-space {
+    margin-right: 5px;
+}
+
 #map{
     float:left;
     display:inline-block;
