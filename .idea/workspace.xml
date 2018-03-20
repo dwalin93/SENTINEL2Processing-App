@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_api/routes/processing.js" afterPath="$PROJECT_DIR$/app_api/routes/processing.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/monitoring.js" afterPath="$PROJECT_DIR$/app/js/monitoring.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -44,7 +44,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="processing.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="processing.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="382">
@@ -88,14 +88,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="monitoring.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="monitoring.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/monitoring.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+            <state relative-caret-position="479">
+              <caret line="91" column="41" lean-forward="false" selection-start-line="91" selection-start-column="41" selection-end-line="91" selection-end-column="41" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modal.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/modal.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="79">
+              <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -115,16 +125,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="movingImage.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/movingImage.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -220,8 +220,8 @@
         <option value="$PROJECT_DIR$/movingImage.sh" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/bin/www" />
-        <option value="$PROJECT_DIR$/app/js/monitoring.js" />
         <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
+        <option value="$PROJECT_DIR$/app/js/monitoring.js" />
       </list>
     </option>
   </component>
@@ -525,7 +525,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="797644000" />
+    <option name="totallyTimeSpent" value="797850000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -769,14 +769,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/modal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -869,21 +861,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/monitoring.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
-          <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="382">
           <caret line="249" column="28" lean-forward="false" selection-start-line="249" selection-start-column="28" selection-end-line="249" selection-end-column="28" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/modal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="79">
+          <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/monitoring.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="91" column="41" lean-forward="false" selection-start-line="91" selection-start-column="41" selection-end-line="91" selection-end-column="41" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -89,6 +89,7 @@ function automatedProcessing(ID,Name) {
 
         },
         error: function (errorMessage) {
+            console.log('No new images');
         }
     });
 }
