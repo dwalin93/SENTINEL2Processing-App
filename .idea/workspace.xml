@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/monitoring.js" afterPath="$PROJECT_DIR$/app/js/monitoring.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/style.css" afterPath="$PROJECT_DIR$/app/views/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_api/routes/processing.js" afterPath="$PROJECT_DIR$/app_api/routes/processing.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -31,8 +28,8 @@
       <file leaf-file-name="processing.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3477">
-              <caret line="40" column="13" lean-forward="false" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
+            <state relative-caret-position="527">
+              <caret line="1046" column="0" lean-forward="true" selection-start-line="1046" selection-start-column="0" selection-end-line="1046" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,21 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="processing.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/processing.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Sentinel.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="561">
-              <caret line="322" column="9" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="322" selection-end-column="9" />
+              <caret line="322" column="9" lean-forward="false" selection-start-line="320" selection-start-column="0" selection-end-line="322" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -78,11 +65,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="movingImage.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/movingImage.sh">
+      <file leaf-file-name="downloadProducts2.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/downloadProducts2.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="15" column="2" lean-forward="true" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -102,11 +89,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="downloadProducts.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/downloadProducts.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="17" column="7" lean-forward="false" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TranslateWith1C.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="350">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -117,16 +124,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-285">
               <caret line="1" column="57" lean-forward="false" selection-start-line="1" selection-start-column="57" selection-end-line="1" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TranslateWith2A.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TranslateWith2A.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -197,7 +194,6 @@
         <option value="$PROJECT_DIR$/app/lib/css/basic.css" />
         <option value="$PROJECT_DIR$/downloadProducts2.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/downloadProducts.sh" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app/js/clientFunctions.js" />
         <option value="$PROJECT_DIR$/app_api/routes/monitoring.js" />
@@ -220,10 +216,11 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/movingImage.sh" />
-        <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
         <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/views/style.css" />
         <option value="$PROJECT_DIR$/app/js/monitoring.js" />
+        <option value="$PROJECT_DIR$/downloadProducts.sh" />
+        <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
       </list>
     </option>
   </component>
@@ -545,7 +542,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="806877000" />
+    <option name="totallyTimeSpent" value="808577000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -670,13 +667,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.sh" />
-    <entry file="file://$PROJECT_DIR$/downloadProducts2.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -719,14 +709,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/downloadProducts.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="15" column="138" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="138" />
           <folding />
         </state>
       </provider>
@@ -813,14 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TranslateWith2A.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
@@ -861,14 +835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="322" column="9" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="322" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
@@ -884,7 +850,7 @@
     <entry file="file://$PROJECT_DIR$/app/views/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="350">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -897,10 +863,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/downloadProducts2.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TranslateWith1C.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="17" column="24" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/downloadProducts.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="17" column="7" lean-forward="false" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/Sentinel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="322" column="9" lean-forward="false" selection-start-line="320" selection-start-column="0" selection-end-line="322" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3477">
-          <caret line="40" column="13" lean-forward="false" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
+        <state relative-caret-position="527">
+          <caret line="1046" column="0" lean-forward="true" selection-start-line="1046" selection-start-column="0" selection-end-line="1046" selection-end-column="0" />
           <folding />
         </state>
       </provider>

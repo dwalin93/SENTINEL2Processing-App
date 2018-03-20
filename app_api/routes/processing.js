@@ -990,7 +990,8 @@ function unZIP(path,dest,promObj) {
             console.log(files)
             for (i = 0; i < files.length; i++) {
                 console.log(files[i].split('.').pop())
-                if (files[i].split('.').pop() == 'zip') {
+                if (files[i].split('.').pop() == 'zip' && !fs.existsSync(files[i].split('.').pop() == 'SAFE')) {
+                    console.log(files[i]);
                     fs.createReadStream(path + files[i]).pipe(unzip.Extract({path: dest}))
                         .on('close', function () {
                             resolve(promObj);
@@ -1040,9 +1041,9 @@ function createResultFolder(promObj) {
         }
     })
 
-    function checkExists(image){
 
-    }
 }
+
+
 
 module.exports = app;
