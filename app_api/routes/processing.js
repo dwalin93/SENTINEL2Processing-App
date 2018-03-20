@@ -33,12 +33,12 @@ app.post('/processImages', function (req,res) {
     promObj['Shapefile'] = req.body.shapefile;
     promObj['names'] = getImagesNames('./app/data/');
 
-    console.log(promObj.Shapefile);
+    console.log('NAMES ' + promObj.names);
             createResultFolder(promObj)
-            .then(unZIP('./app/data/','./app/data'))
-            .then(moveImage)
-            .then(GDALTranslate)
-            .then(processSentinel,promObj.names)
+            //.then(unZIP('./app/data/','./app/data'))
+            //.then(moveImage)
+            //.then(GDALTranslate)
+            .then(processSentinel)
             .then(resp => {
         console.log("THEN:", resp);
                 res.send('Images Ready');
@@ -111,10 +111,10 @@ app.post('/automatedProcessing', function (req,res) {
 
     filterNewImages(promObj)
         //.then(downloadSentinel)
-        .then(unZIP('./app/data/','./app/data'))
-        .then(moveImage)
-        .then(GDALTranslate)
-        .then(processSentinel,promObj.newName)
+        //.then(unZIP('./app/data/','./app/data'))
+       // .then(moveImage)
+        //.then(GDALTranslate)
+        .then(processSentinelNewImages)
         .then(compareWithLast)
         .then(readMail)
         .then(writeMail)
@@ -289,9 +289,26 @@ function lookDailyUpdate(promObj) {
  * @param promObj
  * @returns {Promise}
  */
-function processSentinel(promObj,type) {
+function processSentinel(promObj) {
     return new Promise((resolve, reject) =>{
-        Promise.all([createFCC(promObj,type), calcNDVI(promObj,type)])
+        Promise.all([createFCC(promObj), calcNDVI(promObj)])
+            .then(() =>{
+                resolve(promObj);
+            }).catch((err) =>{
+            reject(err);
+        })
+    })
+}
+
+/**
+ * Calculates FCC and NDVI for new arrived images
+ * @param promObj
+ * @param type
+ * @returns {Promise}
+ */
+function processSentinelNewImages(promObj) {
+    return new Promise((resolve, reject) =>{
+        Promise.all([createFCCNI(promObj), calcNDVINI(promObj)])
             .then(() =>{
                 resolve(promObj);
             }).catch((err) =>{
@@ -305,8 +322,9 @@ function processSentinel(promObj,type) {
  * @param promObj
  * @returns {Promise}
  */
-function calcNDVI(promObj,type){
+function calcNDVI(promObj){
     console.log('I am now in calcNDVI');
+    console.log(promObj.names)
     return new Promise((resolve,reject) => {
         function NDVI(name,callback) {
             var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/calcNDVI';
@@ -359,7 +377,7 @@ function calcNDVI(promObj,type){
 
 
         }
-            async.eachSeries(type, NDVI, function (err) {
+            async.eachSeries(promObj.names, NDVI, function (err) {
                 if (err) reject(promObj);
                 else {
                     resolve(promObj);
@@ -370,11 +388,81 @@ function calcNDVI(promObj,type){
 }
 
 /**
+ * Create NDVI for new arrived images
+ * @param promObj
+ * @returns {Promise}
+ */
+function calcNDVINI(promObj){
+    console.log('I am now in calcNDVINI');
+    console.log(promObj.newName);
+    return new Promise((resolve,reject) => {
+        function NDVI(name,callback) {
+            var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/calcNDVI';
+            if (name.toString().substring(8, 10) == '1C') {
+                var formData = {
+                    NIR: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
+                    Red: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
+                    shapeLink:'"/home/p_glah01/SentinelApp/SENTINEL2Processing-App/'+'shapefiles/' + promObj.Shapefile + '.shp"'
+                }
+            } else {
+                var formData = {
+                    NIR: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
+                    Red: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
+                    shapeLink: '"/home/p_glah01/SentinelApp/SENTINEL2Processing-App/'+'shapefiles/' + promObj.Shapefile + '.shp"'
+                }
+            }
+
+            console.log('calculating NDVI');
+            request.post({
+                url: url,
+                formData: formData
+            }, function optionalCallback(err, response, body,cb) {
+                err = err || (response && (response.statusCode === 400 ||
+                    response.statusCode === 502 ||
+                    response.statusCode === 503) && response.statusCode);
+                console.log(body);
+                if (!err) {
+                    result = [];
+                    var String = body.toString();
+                    var sub = String.substring(10, 21);
+                    console.log(sub);
+                    promObj["tempLoc"] = sub;
+                    console.log('I was here');
+                    if (name.toString().substring(8, 10) == '1C') {
+                        var path = '/IMG_DATA/'
+                    } else {
+                        var path = '/IMG_DATA/R10m/'
+                    }
+                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png?width=10980&height=10980', function (err, response, body) {
+                    })
+                        .pipe(fs.createWriteStream('./app/data/' + name + path + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_NDV.png'))
+                        .on('finish', () => {
+                            console.log(name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_NDV.png' + "saved");
+                            callback();
+                        });
+                }
+
+
+            })
+
+
+        }
+        async.eachSeries(promObj.newName, NDVI, function (err) {
+            if (err) reject(promObj);
+            else {
+                resolve(promObj);
+            }
+        });
+
+    })
+}
+
+/**
  * Calculates FCC calling R package through OpenCPU
  * @param promObj
  * @returns {Promise}
  */
-function createFCC(promObj,type){
+function createFCC(promObj){
     return new Promise((resolve,reject) => {
         function FalseColorComposite(name,callback) {
             var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/FCC';
@@ -424,7 +512,72 @@ function createFCC(promObj,type){
 
 
         }
-        async.eachSeries(type, FalseColorComposite, function (err) {
+        async.eachSeries(promObj.names, FalseColorComposite, function (err) {
+            if (err) reject(promObj);
+            else {
+                resolve(promObj);
+            }
+        });
+
+    })
+}
+
+/**
+ * Return FCC image for new arrived images
+ * @param promObj
+ * @returns {Promise}
+ */
+function createFCCNI(promObj){
+    return new Promise((resolve,reject) => {
+        function FalseColorComposite(name,callback) {
+            var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/FCC';
+            if (name.toString().substring(8, 10) == '1C') {
+                var formData = {
+                    R: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
+                    G: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
+                    B: fs.createReadStream('./app/data/' + name + '/IMG_DATA/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B03.png')
+                }
+            } else {
+                var formData = {
+                    R: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B08.png'),
+                    G: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B04.png'),
+                    B: fs.createReadStream('./app/data/' + name + '/IMG_DATA/R10m/' + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_B03.png')
+                }
+            }
+            request.post({
+                url: url,
+                formData: formData
+            }, function optionalCallback(err, response, body) {
+                err = err || (response && (response.statusCode === 400 ||
+                    response.statusCode === 502 ||
+                    response.statusCode === 503) && response.statusCode);
+                if (!err) {
+                    result = [];
+                    var String = body.toString();
+                    var sub = String.substring(10, 21);
+                    console.log(sub);
+                    promObj["tempLoc"] = sub;
+                    console.log('I was here');
+                    if (name.toString().substring(8, 10) == '1C') {
+                        var path = '/IMG_DATA/'
+                    } else {
+                        var path = '/IMG_DATA/R10m/'
+                    }
+                    request.get('http://gis-bigdata:6501/ocpu/tmp/' + promObj.tempLoc + '/graphics/1/png?width=10980&height=10980', function (err, response, body) {
+                    })
+                        .pipe(fs.createWriteStream('./app/data/' + name + path + name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_FCC.png'))
+                        .on('finish', () => {
+                            console.log(name.toString().substring(38, 44) + '_' + name.toString().substring(11, 26) + '_FCC.png' + "saved");
+                            callback();
+                        });
+                }
+
+
+            })
+
+
+        }
+        async.eachSeries(promObj.newName, FalseColorComposite, function (err) {
             if (err) reject(promObj);
             else {
                 resolve(promObj);
