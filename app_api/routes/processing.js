@@ -110,7 +110,7 @@ app.post('/automatedProcessing', function (req,res) {
 
 
     filterNewImages(promObj)
-        .then(downloadSentinel)
+        //.then(downloadSentinel)
         .then(unZIP('./app/data/','./app/data'))
         .then(moveImage)
         .then(GDALTranslate)
