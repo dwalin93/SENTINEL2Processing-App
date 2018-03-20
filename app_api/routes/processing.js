@@ -38,7 +38,7 @@ app.post('/processImages', function (req,res) {
             .then(unZIP('./app/data/','./app/data'))
             .then(moveImage)
             .then(GDALTranslate)
-            .then(processSentinel)
+            .then(processSentinel,promObj.names)
             .then(resp => {
         console.log("THEN:", resp);
                 res.send('Images Ready');
@@ -114,7 +114,7 @@ app.post('/automatedProcessing', function (req,res) {
         .then(unZIP('./app/data/','./app/data'))
         .then(moveImage)
         .then(GDALTranslate)
-        .then(processSentinel)
+        .then(processSentinel,promObj.newName)
         .then(compareWithLast)
         .then(readMail)
         .then(writeMail)
@@ -289,9 +289,9 @@ function lookDailyUpdate(promObj) {
  * @param promObj
  * @returns {Promise}
  */
-function processSentinel(promObj) {
+function processSentinel(promObj,type) {
     return new Promise((resolve, reject) =>{
-        Promise.all([createFCC(promObj), calcNDVI(promObj)])
+        Promise.all([createFCC(promObj,type), calcNDVI(promObj,type)])
             .then(() =>{
                 resolve(promObj);
             }).catch((err) =>{
@@ -305,7 +305,7 @@ function processSentinel(promObj) {
  * @param promObj
  * @returns {Promise}
  */
-function calcNDVI(promObj){
+function calcNDVI(promObj,type){
     console.log('I am now in calcNDVI');
     return new Promise((resolve,reject) => {
         function NDVI(name,callback) {
@@ -359,7 +359,7 @@ function calcNDVI(promObj){
 
 
         }
-            async.eachSeries(promObj.names, NDVI, function (err) {
+            async.eachSeries(type, NDVI, function (err) {
                 if (err) reject(promObj);
                 else {
                     resolve(promObj);
@@ -374,7 +374,7 @@ function calcNDVI(promObj){
  * @param promObj
  * @returns {Promise}
  */
-function createFCC(promObj){
+function createFCC(promObj,type){
     return new Promise((resolve,reject) => {
         function FalseColorComposite(name,callback) {
             var url = 'http://gis-bigdata:6501/ocpu/library/SENTINEL2Processing/R/FCC';
@@ -424,7 +424,7 @@ function createFCC(promObj){
 
 
         }
-        async.eachSeries(promObj.names, FalseColorComposite, function (err) {
+        async.eachSeries(type, FalseColorComposite, function (err) {
             if (err) reject(promObj);
             else {
                 resolve(promObj);

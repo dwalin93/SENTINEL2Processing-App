@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b10906a-d20a-47f1-8458-9dfc1c2c7f9a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app_api/routes/processing.js" afterPath="$PROJECT_DIR$/app_api/routes/processing.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/movingImage.sh" afterPath="$PROJECT_DIR$/movingImage.sh" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="processing.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="processing.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="847" column="26" lean-forward="false" selection-start-line="847" selection-start-column="26" selection-end-line="847" selection-end-column="26" />
+            <state relative-caret-position="-1436">
+              <caret line="40" column="47" lean-forward="false" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -67,12 +67,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="movingImage.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="movingImage.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/movingImage.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="375">
               <caret line="15" column="2" lean-forward="true" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="341">
+              <caret line="77" column="98" lean-forward="false" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
+              <folding>
+                <element signature="e#2910#2917#0" expanded="true" />
+                <element signature="e#3111#3118#0" expanded="true" />
+                <element signature="e#4237#4243#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,16 +126,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="79">
               <caret line="47" column="37" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="www" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/www">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -208,7 +212,6 @@
         <option value="$PROJECT_DIR$/TranslateWith2A.sh" />
         <option value="$PROJECT_DIR$/app/js/maps.js" />
         <option value="$PROJECT_DIR$/app/js/modal.js" />
-        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/js/processing.js" />
         <option value="$PROJECT_DIR$/app/js/Sentinel.js" />
         <option value="$PROJECT_DIR$/app/js/shapeFileUpload.js" />
@@ -217,8 +220,9 @@
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/bin/www" />
         <option value="$PROJECT_DIR$/app/js/monitoring.js" />
-        <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
         <option value="$PROJECT_DIR$/movingImage.sh" />
+        <option value="$PROJECT_DIR$/app/index.html" />
+        <option value="$PROJECT_DIR$/app_api/routes/processing.js" />
       </list>
     </option>
   </component>
@@ -522,7 +526,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="799341000" />
+    <option name="totallyTimeSpent" value="800428000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
@@ -782,18 +786,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="76" column="69" lean-forward="false" selection-start-line="76" selection-start-column="69" selection-end-line="76" selection-end-column="69" />
-          <folding>
-            <element signature="e#2910#2917#0" expanded="true" />
-            <element signature="e#3111#3118#0" expanded="true" />
-            <element signature="e#4155#4161#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -844,14 +836,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="847" column="26" lean-forward="false" selection-start-line="847" selection-start-column="26" selection-end-line="847" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GDAL_Translate.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -880,6 +864,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
           <caret line="15" column="2" lean-forward="true" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="77" column="98" lean-forward="false" selection-start-line="77" selection-start-column="98" selection-end-line="77" selection-end-column="98" />
+          <folding>
+            <element signature="e#2910#2917#0" expanded="true" />
+            <element signature="e#3111#3118#0" expanded="true" />
+            <element signature="e#4237#4243#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_api/routes/processing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1436">
+          <caret line="40" column="47" lean-forward="false" selection-start-line="40" selection-start-column="47" selection-end-line="40" selection-end-column="47" />
           <folding />
         </state>
       </provider>
