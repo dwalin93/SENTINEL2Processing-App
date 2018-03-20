@@ -191,57 +191,63 @@ function downloadSentinel(promObj){
 
         var directory = __dirname.substring(0, __dirname.indexOf("\\app_api"));
 
-        var urls = index.parseArrayForBash(promObj.ID);
-        var names = index.parseArrayForBash(promObj.names);
+        if(promObj.newID.length >0) {
 
-        if (process.platform === "win32") {
-            console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
-            child = exec(directory + '\\downloadProducts.sh ' + urls + ' ' + names, [{stdio:'inherit'}]);
+            var urls = index.parseArrayForBash(promObj.newID);
+            var names = index.parseArrayForBash(promObj.newName);
 
-            child.stdout.on('data', (data) => {
-                console.log(`stdout: ${data}`);
-            });
 
-            child.stderr.on('data', (data) => {
-                console.log(`stderr: ${data}`);
-            });
+            if (process.platform === "win32") {
+                console.log("executing:", directory + '\\downloadProducts.sh ' + urls + ' ' + names);
+                child = exec(directory + '\\downloadProducts.sh ' + urls + ' ' + names, [{stdio: 'inherit'}]);
 
-            child.on("error", function (error) {
-                console.log("child error:", error);
-                reject(promObj)
-            })
+                child.stdout.on('data', (data) => {
+                    console.log(`stdout: ${data}`);
+                });
 
-            child.on('data', function (data) {
-                console.log(data.toString());
+                child.stderr.on('data', (data) => {
+                    console.log(`stderr: ${data}`);
+                });
 
-            });
+                child.on("error", function (error) {
+                    console.log("child error:", error);
+                    reject(promObj)
+                })
 
-            child.on('exit', function (exit) {
-                console.log("child exit:", exit);
-                resolve(promObj);
-            })
+                child.on('data', function (data) {
+                    console.log(data.toString());
 
+                });
+
+                child.on('exit', function (exit) {
+                    console.log("child exit:", exit);
+                    resolve(promObj);
+                })
+
+            } else {
+                console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
+                child = exec('bash downloadProducts.sh ' + urls + ' ' + names, [{stdio: 'inherit'}]);
+
+                child.stderr.pipe(process.stderr);
+                child.stdout.pipe(process.stdout);
+
+                child.on("error", function (error) {
+                    console.log("child error:", error);
+                    reject(promObj)
+                })
+
+                child.on('data', function (data) {
+                    console.log(data.toString());
+
+                });
+
+                child.on('exit', function (exit) {
+                    console.log("child exit:", exit);
+                    resolve(promObj);
+                })
+            }
         } else {
-            console.log("executing:", './downloadProducts.sh ' + urls + ' ' + names);
-            child = exec('bash downloadProducts.sh '+ urls + ' ' + names, [{stdio:'inherit'}]);
-
-            child.stderr.pipe(process.stderr);
-            child.stdout.pipe(process.stdout);
-
-            child.on("error", function (error) {
-                console.log("child error:", error);
-                reject(promObj)
-            })
-
-            child.on('data', function (data) {
-                console.log(data.toString());
-
-            });
-
-            child.on('exit', function (exit) {
-                console.log("child exit:", exit);
-                resolve(promObj);
-            })
+            reject(promObj);
         }
     })
 }
