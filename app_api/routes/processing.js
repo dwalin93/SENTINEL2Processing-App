@@ -267,7 +267,7 @@ function lookDailyUpdate(promObj) {
             'sendImmediately': false
         };
 
-        request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-5DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
+        request(url_search + 'footprint:"Intersects(POLYGON((' + promObj.coordinates + ')))" AND platformname:Sentinel-2 AND ingestiondate:[NOW-30DAYS TO NOW] ' + '&rows=100' + '&orderby=beginposition desc&format=json', {auth: auth}, function (error, response, body) {
             console.log(body);
             promObj['results'] = body;
             resolve(promObj);
