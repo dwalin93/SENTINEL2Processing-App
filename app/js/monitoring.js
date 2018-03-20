@@ -46,7 +46,7 @@ function lookForNewData() {
                     coordinates: localStorage.getItem('convertedCoordArray')
                 },
                 success: function (data, response) {
-                    alert('New images arrived.');
+                    console.log('New images arrived.');
                     console.log(data);
                     var parsed = JSON.parse(data.results);
                     console.log(parsed)
@@ -54,6 +54,7 @@ function lookForNewData() {
                         var ID = extractID(parsed);
                         var Name = extractName(parsed);
                         console.log(ID);
+                        console.log(Name);
                         automatedProcessing(ID, Name);
                     }
 
