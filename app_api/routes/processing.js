@@ -35,7 +35,6 @@ app.post('/processImages', function (req,res) {
 
     console.log('NAMES ' + promObj.names);
             createResultFolder(promObj)
-            .then(unZIP('./app/data/','./app/data'))
             .then(moveImage)
             .then(GDALTranslate)
             .then(processSentinel)
@@ -855,6 +854,8 @@ function parseImageSrc(imageSrc){
 function moveImage(promObj){
     console.log('I am Moving')
     return new Promise((resolve, reject) => {
+        unZIP('./app/data/','./app/data');
+        console.log('finished unzip');
             var sys = require('util'),
                 exec = require('child_process').exec,
                 child;
@@ -985,7 +986,6 @@ function GDALTranslate(promObj) {
  */
 function unZIP(path,dest,promObj) {
     return new Promise((resolve, reject) => {
-        try {
             var files = fs.readdirSync(path);
             console.log(files)
             for (i = 0; i < files.length; i++) {
@@ -995,18 +995,13 @@ function unZIP(path,dest,promObj) {
                     fs.createReadStream(path + files[i]).pipe(unzip.Extract({path: dest}))
                         .on('close', function () {
                             resolve(promObj);
-                        })
+                        }).on('error', function () {
+                        reject(promObj);
+                    })
 
                 }
-                else{
-                    reject(promObj);
-                }
-
             }
-        } catch (error){
-            reject(error)
-            console.log(error);
-        }
+
     })
 }
 
@@ -1044,6 +1039,6 @@ function createResultFolder(promObj) {
 
 }
 
-
+unZIP('./app/data/','./app/data')
 
 module.exports = app;
