@@ -29,9 +29,10 @@ function oneDayPassed(){
  * @returns {boolean}
  */
 function lookForNewData() {
-    if (!oneDayPassed()) {
+  /**  if (!oneDayPassed()) {
         return false;
     } else {
+    **/
         console.log('I AM RUNNING');
         if (localStorage.getItem('convertedCoordArray') != null) {
             var url = encodeURI('/processing/lookForNewImages');
@@ -61,7 +62,7 @@ function lookForNewData() {
                 }
             });
         }
-    }
+    //}
 }
 
 /**
