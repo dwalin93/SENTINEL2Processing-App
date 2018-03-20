@@ -10,6 +10,9 @@ var path = require('path');
 var unzip = require('unzip');
 var index = require('./index');
 var nodemailer = require('nodemailer');
+var schedule = require('node-schedule');
+
+
 
 
 /**
@@ -54,7 +57,7 @@ app.get('/lookForNewImages', function (req,res) {
     var promObj = {};
     console.log(req.body.coordinates);
     promObj['coordinates'] = req.query.coordinates;
-    promObj['shapeFile'] = req.query.shapefile;
+
 
     lookDailyUpdate(promObj)
         .then((resp) => {
@@ -96,10 +99,12 @@ app.post('/automatedProcessing', function (req,res) {
     console.log(req.body.id);
     var ID = req.body.id;
     var Name = req.body.name;
+    var Shapefile = req.body.shapefile
     promObj['names'] = Name
     promObj['ID'] = ID;
+    promObj['Shapefile'] = Shapefile;
     console.log('promObj.Name ' + promObj.names);
-    console.log(promObj.ID);
+    console.log(promObj.Shapefile);
    // promObj.newName = ['S2A_MSIL1C_20180213T041901_N0206_R090_T46QCJ_20180213T075744.SAFE','S2A_MSIL1C_20180213T041901_N0206_R090_T46QCH_20180213T075744.SAFE']
 
 
